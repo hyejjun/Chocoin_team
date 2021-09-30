@@ -4,8 +4,11 @@ const port = process.env.PORT||3500
 const {sequelize} = require('./models')
 const morgan = require('morgan')
 require('dotenv').config('env')
+const router = require('./routes')
+const bodyParser = require('body-parser')
 
-
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json())
 
 sequelize.sync({force:true})
 .then(()=>{
@@ -16,6 +19,8 @@ sequelize.sync({force:true})
 })
 
 app.use(morgan('dev'))
+
+app.get('/',router)
 
 
 app.listen(port,()=>{
