@@ -1,25 +1,31 @@
+import { useState } from "react"
 import Styled from "styled-components"
 import TradeForm from "./TradeFrom"
 
 const Trade = () => {
+    const [type, setType] = useState('ASK')
     return (
         <>
             <TradeWrap>
                 <TradeHead>
                     <TradeMethod>
-                        <p
+                        <ASK
+                            flag = {type}
+                            onClick={() => setType('ASK')}
                         >
                             매수
-                        </p>
+                        </ASK>
                     </TradeMethod>
                     <TradeMethod>
-                        <p
+                        <BID
+                            flag = {type}
+                            onClick={() => setType('BID')}
                         >
                             매도
-                        </p>
+                        </BID>
                     </TradeMethod>
                 </TradeHead>
-                <TradeForm />
+                <TradeForm type={type} />
             </TradeWrap>
         </>
     )
@@ -45,11 +51,16 @@ const TradeHead = Styled.div`
 
 const TradeMethod = Styled.div`
     margin: 0 20px;
-    margin: 0;
     cursor: pointer;
     color: #b9b9b9;
-    &>p{
-        text-decoration: underline;
-        color: #333;
-    }
+`
+
+const ASK = Styled.p`
+    text-decoration :  ${props=>(props.flag==="ASK"? 'underline' : 'none')};
+    color :  ${props=>(props.flag==="ASK"? 'black' : 'none')};
+`
+
+const BID = Styled.p`
+    text-decoration:  ${props=>(props.flag==="BID"? 'underline' : 'none')};
+    color :  ${props=>(props.flag==="BID"? 'black' : 'none')};
 `

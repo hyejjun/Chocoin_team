@@ -31,7 +31,7 @@ const OrderbookWrap = Styled.div`
     width : 25%;
     height: 100%;
     margin : 10px 20px;
-    background : gray;
+    
     & > div:nth-child(1) {
         display: flex;
         padding: 0 0 1em;
