@@ -3,11 +3,13 @@ import axios from 'axios'
 import { url } from './url'
 
 function exchangeAPI(data) {
+    console.log(data,'dataaaaaaaaaaaaaaaaaaaaaaaaa')
     return axios.post(`${url}/coin/order`,data)
 }
 
 function* exchange(action) { 
     const result = yield call(exchangeAPI, action.data)
+
     
     const { data } = result
     console.log(data);
