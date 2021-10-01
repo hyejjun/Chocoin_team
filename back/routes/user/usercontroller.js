@@ -26,14 +26,13 @@ let login_get = (req,res) => {
 }
 
 let login_post = (req,res) => {
-    let query = `insert into usertable () values()`
+    let query = `insert into usertable (userid,userpw) values('id','pw')`
     send_data(req,res,query)
 }
 
 let mypage_get = (req,res) => {
     let query = `select ~`
-    get_date(req,res,data)
-
+    get_data(req,res,data)
 }
 
 let mypage_post = (req,res) => {
