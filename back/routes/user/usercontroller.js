@@ -13,28 +13,31 @@ const {get_data, send_data} = require('../../db.js')
 
 let join_get = (req,res) => {
     res.render('회원가입창에 들어왔을때...!')
-
 }
 
 let join_post = (req,res) => {
-    let query = ``
+    let query = `insert into usertable (userid, userpw) values('id','pw')`
     send_data(req,res,query)
 }
 
 let login_get = (req,res) => {
+    res.rendser('로그인 창에 들어왔을 때')
 
 }
 
 let login_post = (req,res) => {
-
+    let query = `insert into usertable (userid,userpw) values('id','pw')`
+    send_data(req,res,query)
 }
 
 let mypage_get = (req,res) => {
-
+    let query = `select ~`
+    get_data(req,res,data)
 }
 
 let mypage_post = (req,res) => {
-
+    let query = `insert into user () values()`
+    send_data(req,res,query)
 }
 
 module.exports = {
