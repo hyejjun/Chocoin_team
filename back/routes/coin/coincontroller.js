@@ -36,12 +36,30 @@ let get_orderdata = () => {
             }else{
                 res.json({'msg':'db connection success'})
             }
+            connection.release();
 
+        })
+    })
+}
+
+let test = (req,res) =>{
+    pool.getConnection((err,connection)=>{
+        if(err) throw err;
+        connection.query(`insert into ordertable (pk,userid,price,qty,ordertype,active) values('2','1','1','1','1','1')`,
+        function(error,results,fields){
+            if(error) throw error;
+            if(results==undefined){
+                res.json({'msg':'db connection fail'})
+            }else{
+                res.json({'msg':'db connection success'})
+            }
+            connection.release();
         })
     })
 }
 
 module.exports = {
     coin_info,
-    get_orderdata
+    get_orderdata,
+    test
 };
