@@ -24,22 +24,24 @@ let coin_info = (req,res) => {
     // })
 };
 
-let get_orderdata = () => {
-    let {price,qnt,total,type} = req.body
-    let query = `insert into ordertable (pk,userid,price,qty,ordertype) values(${price,qnt,total,type})`
-    send_data(req,res,query)
+
+let get_orderdata = (req,res) => {
+    let {price,qnt,total,type} = req.body       
+    
+
     // pool.getConnection((err,connection)=>{
     //     if(err) throw err;
     //     connection.query(`insert into ordertable (pk,userid,price,qty,ordertype) values(''....)`,
-    //         function(error,results,fields){
-    //             if(error) throw error;
-    //             if(results==undefined){
-    //                 res.json({'msg':'db connection fail'})
-    //             }else{
-    //                 res.json({'msg':'db connection success'})
-    //             }
-    //             connection.release();
-    //         })
+    //     function(error,results,fields){
+    //         if(error) throw error;
+    //         if(results==undefined){
+    //             res.json({'msg':'db connection fail'})
+    //         }else{
+    //             res.json({'msg':'db connection success'})
+    //         }
+    //         connection.release();
+
+    //     })
     // })
 }
 

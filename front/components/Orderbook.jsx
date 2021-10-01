@@ -28,7 +28,7 @@ const Orderbook = () => {
 export default Orderbook
 
 const OrderbookWrap = Styled.div`
-    width : 25%;
+    /* width : 25%; */
     height: 100%;
     margin : 10px 20px;
     
