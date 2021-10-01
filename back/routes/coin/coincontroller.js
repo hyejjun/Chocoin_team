@@ -24,22 +24,22 @@ let coin_info = (req,res) => {
     })
 };
 
-let get_orderdata = () => {
-    let {가격,수량} = req.body
-    pool.getConnection((err,connection)=>{
-        if(err) throw err;
-        connection.query(`insert into ordertable (pk,userid,price,qty,ordertype) values(''....)`,
-        function(error,results,fields){
-            if(error) throw error;
-            if(results==undefined){
-                res.json({'msg':'db connection fail'})
-            }else{
-                res.json({'msg':'db connection success'})
-            }
-            connection.release();
+let get_orderdata = (req,res) => {
+    let {price,qnt,total,type} = req.body
+    // pool.getConnection((err,connection)=>{
+    //     if(err) throw err;
+    //     connection.query(`insert into ordertable (pk,userid,price,qty,ordertype) values(''....)`,
+    //     function(error,results,fields){
+    //         if(error) throw error;
+    //         if(results==undefined){
+    //             res.json({'msg':'db connection fail'})
+    //         }else{
+    //             res.json({'msg':'db connection success'})
+    //         }
+    //         connection.release();
 
-        })
-    })
+    //     })
+    // })
 }
 
 
@@ -47,5 +47,4 @@ let get_orderdata = () => {
 module.exports = {
     coin_info,
     get_orderdata,
-    test
 };

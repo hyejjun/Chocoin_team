@@ -31,11 +31,10 @@ export const ExchangeInsert_ERROR = () => {
 const reducer = (state = initalState, action) => {
     switch (action.type) {
         case EXCHANGE_INSERT_REQUEST:
-            console.log("action ===== ",action);
             return {
                 ...state,
                 loading: true,
-                data
+                orderData : action.data
             }
         case EXCHANGE_INSERT_SUCCESS:
             return {
