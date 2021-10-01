@@ -8,15 +8,17 @@
 
 const mysql = require('mysql')
 const config = require('../../db_config.json')
-const pool = mysql.createPool(config)
+const {get_data, send_data} = require('../../db.js')
 
 
 let join_get = (req,res) => {
+    res.render('회원가입창에 들어왔을때...!')
 
 }
 
 let join_post = (req,res) => {
-
+    let query = ``
+    send_data(req,res,query)
 }
 
 let login_get = (req,res) => {
