@@ -5,12 +5,12 @@ const Navigation = () => {
     return (
         <>
             <Gnb>
-                <li class="logo">chocoin</li>
+                <li className="logo"><Link href='/'><a>chocoin</a></Link></li>
                 <li><Link href='/'><a>거래소</a></Link></li>
                 <li><Link href='/join'><a>회원가입</a></Link></li>
                 <li><Link href='/mypage'><a>내 정보</a></Link></li>
                 <li><Link href='/coininfo'><a>코인 정보</a></Link></li>
-                <ul class="join_wrap">
+                <ul className="join_wrap">
                     <li>로그인</li>
                     <li>회원가입</li>
                 </ul>
@@ -30,7 +30,7 @@ const Gnb = Styled.ul`
     padding:25px;
     background-color:hsl(205, 77%, 27%);
 
-    .logo{
+    .logo>a{
         margin-left:50px;
         margin-right:50px;
         padding:0;
@@ -48,7 +48,7 @@ const Gnb = Styled.ul`
         font-size:18px;
         font-family: 'Noto Sans KR', sans-serif;
     }
-    & > ul{
+    .join_wrap{
         
         display : flex;
         flex-direction : row;

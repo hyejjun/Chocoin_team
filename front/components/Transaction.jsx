@@ -26,7 +26,7 @@ const Transaction = ()=>{
 export default Transaction
 
 const TransactionWrap = Styled.div`
-    width : 33.3%;
+    /* width : 33.3%; */
 
     & > div > div {
         width : 100%;

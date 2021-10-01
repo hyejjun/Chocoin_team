@@ -34,7 +34,7 @@ const Trade = () => {
 export default Trade
 
 const TradeWrap = Styled.div`
-    width:33.3%;
+    /* width:33.3%; */
 `
 
 const TradeHead = Styled.div`

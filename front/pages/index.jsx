@@ -36,4 +36,9 @@ const OrderInner = Styled.div`
     width: 100%;
     height: auto;
     display: flex;
+    flex-wrap: wrap;
+    gap: 0 35px;
+    & > div {
+        width : 30%;
+    }
 `
