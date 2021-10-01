@@ -9,9 +9,6 @@ const config = {
 
 const pool = mysql.createPool(config)
 
-
-
-
 // let coin_info = () => {
 //     let {} = req.body
 //     pool.getConnection((err,connection)=>{
@@ -25,11 +22,16 @@ let get_orderdata = () => {
     let {가격,수량} = req.body
     pool.getConnecion((err,connection)=>{
         if(err) throw err;
-        connection.query(`insert into ordertable (pk,userid,price,qty,ordertype) values('','')`);
+        connection.query(`insert into ordertable (pk,userid,price,qty,ordertype) values('',''...)`);
 
         (error,result,fields)=>{
             connection.release();
             if(error) throw error;
+            if(result==undefined){
+                res.json({'msg':'order error'})
+            }else{
+                res.json({'msg':'order success'})
+            }
         }
     })
 }
