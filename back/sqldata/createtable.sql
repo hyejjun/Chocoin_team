@@ -19,12 +19,13 @@ CREATE TABLE IF NOT EXISTS asset(
 
 CREATE TABLE IF NOT EXISTS ordertable(
     pk INT NOT NULL PRIMARY KEY,
-    userid VARCHAR(50) NOT NULL,
+    userid VARCHAR(50),
     price INT NOT NULL,
     qty INT NOT NULL,
-    ordertype BOOLEAN,
+    ordertype VARCHAR(50),
     active BOOLEAN,
-    index(pk)
+    index(pk),
+    index(userid)
 )   engine=innoDB default charset=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS transactions(
