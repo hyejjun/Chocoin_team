@@ -1,27 +1,26 @@
+
 const mysql = require('mysql');
 
-const config = {
-    host:'localhost',
-    user:'root',
-    password:'root',
-    database:'chocoin_db'
-}
+const {get_data,send_data} = require('../../db.js')
 
-const pool = mysql.createPool(config)
+
 
 let coin_info = (req,res) => {
-    pool.getConnection((err,connection)=>{
-        if(err) throw err;
-        connection.query(`select * from asset`,function(error,results,fields){
-            if(error) throw error;
-            if(results==undefined){
-                res.json({'msg':'db connection fail'})
-            }else{
-                res.json({'mse':'db suc',results})
-            }
-            connection.release();
-        });  
-    })
+    let query = `select * from asset`
+    get_data(req,res,query)
+    // pool.getConnection((err,connection)=>{
+    //     if(err) throw err;
+    //     connection.query(`select * from asset`,
+    //         function(error,results,fields){
+    //             if(error) throw error;
+    //             if(results==undefined){
+    //                 res.json({'msg':'db connection fail'})
+    //             }else{
+    //                 res.json({'mse':'db suc',results})
+    //             }
+    //             connection.release();
+    //         });  
+    // })
 };
 
 let get_orderdata = (req,res) => {
