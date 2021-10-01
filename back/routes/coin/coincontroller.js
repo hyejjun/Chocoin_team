@@ -6,6 +6,7 @@ const {get_data,send_data} = require('../../db.js')
 
 
 let coin_info = (req,res) => {
+    
     let query = `select * from asset`
     get_data(req,res,query)
     // pool.getConnection((err,connection)=>{
@@ -23,9 +24,11 @@ let coin_info = (req,res) => {
     // })
 };
 
+
 let get_orderdata = (req,res) => {
     let {price,qnt,total,type} = req.body       
     
+
     // pool.getConnection((err,connection)=>{
     //     if(err) throw err;
     //     connection.query(`insert into ordertable (pk,userid,price,qty,ordertype) values(''....)`,
