@@ -25,7 +25,8 @@ let coin_info = (req,res) => {
 };
 
 let get_orderdata = (req,res) => {
-    let {price,qnt,total,type} = req.body
+    let {price,qnt,total,type} = req.body       
+    
     // pool.getConnection((err,connection)=>{
     //     if(err) throw err;
     //     connection.query(`insert into ordertable (pk,userid,price,qty,ordertype) values(''....)`,
