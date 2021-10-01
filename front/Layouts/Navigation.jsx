@@ -10,10 +10,6 @@ const Navigation = () => {
                 <li><Link href='/join'><a>회원가입</a></Link></li>
                 <li><Link href='/mypage'><a>내 정보</a></Link></li>
                 <li><Link href='/coininfo'><a>코인 정보</a></Link></li>
-                <ul class="join_wrap">
-                    <li>로그인</li>
-                    <li>회원가입</li>
-                </ul>
             </Gnb>
         </>
     )
@@ -24,7 +20,8 @@ export default Navigation
 
 const Gnb = Styled.ul`
     display : flex;
-    flex-direction : row;   
+    flex-direction : row;
+    box-sizing:border-box;
     width:100%;
     height:100%;
     padding:25px;

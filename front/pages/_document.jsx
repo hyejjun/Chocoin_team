@@ -61,6 +61,10 @@ import Document, {
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" 
             rel="stylesheet"
         />
+        <link 
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital@1&display=swap" 
+            rel="stylesheet"
+        />
 
         </Head>
         <body>
