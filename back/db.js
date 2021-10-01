@@ -8,9 +8,9 @@ function get_data(req,res,querysyn){
         connection.query(querysyn,function(error,results,fields){
             if(error) throw error;
             if(results==undefined){
-                res.json({'msg':'db connection fail'})
+                res.json({'msg':'fail'})
             }else{
-                res.json({'msg':'db suc',results})
+                res.json({'msg':'suc',results})
             }
             connection.release();
         })
@@ -23,9 +23,9 @@ function send_data(req,res,querysyn){
         connection.query(querysyn,function(error,results,fields){
             if(error) throw error;
             if(results==undefined){
-                res.json({'msg':'db connection fail'})
+                res.json({'msg':'fail'})
             }else{
-                res.json({'msg':'db connection success'})
+                res.json({'msg':'suc'})
             }
             connection.release();
         })
