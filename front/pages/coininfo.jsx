@@ -17,8 +17,8 @@ const Coininfo = ()=>{
                         <li>첫번째 블록체인 프로젝트이며, Litecoin 기반으로 만들어진 코인이다.</li>
                     </ul>
                     <ul>
-                        <li>WHY ZOOM?</li>
-                        <li>당신의 자산을 달달하게 해주는 chocoin입니다.</li>
+                        <li>WHY CHOCO?</li>
+                        <li>당신의 자산을 달달하게 해줄 CHOCOIN입니다.</li>
                     </ul>
                 </div>
             </CoininfoWrap>
@@ -55,9 +55,9 @@ const CoininfoWrap = Styled.div`
         margin-bottom:10px;
     }
     .infoTextWrap > ul:nth-child(2) > li:nth-child(1){
-        margin-top:5px;
         font-family: 'Noto Sans Display', sans-serif;
         font-size:20px;
+        margin-top:10px;
     }
 
 
