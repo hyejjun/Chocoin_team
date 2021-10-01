@@ -36,12 +36,16 @@ let get_orderdata = () => {
             }else{
                 res.json({'msg':'db connection success'})
             }
+            connection.release();
 
         })
     })
 }
 
+
+
 module.exports = {
     coin_info,
-    get_orderdata
+    get_orderdata,
+    test
 };
