@@ -3,7 +3,7 @@ const router = express.Router()
 const coinController = require('./coincontroller.js')
 
 //   /coin/
-router.get('/',coinController)
+router.post('/order',coinController.get_orderdata)
 
 
 module.exports = router

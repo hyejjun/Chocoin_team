@@ -35,5 +35,6 @@ let get_orderdata = () => {
 }
 
 module.exports = {
-    coin_info
+    coin_info,
+    get_orderdata
 };
