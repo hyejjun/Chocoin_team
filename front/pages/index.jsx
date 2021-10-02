@@ -1,5 +1,6 @@
 import React from 'react'
 import RootProvider from '../Providers/rootProvider'
+import Login_form from '../components/user/login_form'
 import Orderbook from '../components/Orderbook'
 import Trade from '../components/Trade'
 import Styled from 'styled-components'
@@ -7,6 +8,7 @@ import Transactionhistory from '../components/Transactionhistory'
 
 const index = () => {
     return (
+        <>
         <RootProvider>
             <OrderboxSection>
                 <OrderInner>
@@ -16,6 +18,8 @@ const index = () => {
                 </OrderInner>
             </OrderboxSection>
         </RootProvider>
+        <Login_form></Login_form>
+        </>
     )
 }
 
