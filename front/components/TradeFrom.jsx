@@ -2,9 +2,13 @@ import Styled from "styled-components"
 import { useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { ExchangeInsert_REQUEST } from "../reducers/exchange"
+import { getTradingRecord_REQUEST } from '../reducers/tradingrecord'
 
 
-const TradeForm = (props) => {
+const TradeForm = (props,state) => {   
+    
+    
+ 
     const dispatch = useDispatch()
 
     const [price, setPrice] = useState(0)
@@ -33,8 +37,11 @@ const TradeForm = (props) => {
         setPrice(0)
         setQnt(0)
     }
-
+    
+    dispatch(getTradingRecord_REQUEST())
+    console.log(state)
     return (
+        
         <>
             <form onSubmit={handelSubmit}>
                 <TradeFrom>
