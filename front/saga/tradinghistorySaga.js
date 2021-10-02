@@ -1,0 +1,7 @@
+export const initalState = {
+    loading:FontFaceSetLoadEvent
+}
+
+export const GET_TRADINGRECORD_REQUEST = "GET_TRADINGRECORD_REQUEST"
+export const GET_TRADINGRECORD_SUCCESS = "GET_TRADINGRECORD_SUCCESS"
+export const GET_TRADINGRECORD_ERROR = "GET_TRADINGRECORD_ERROR"

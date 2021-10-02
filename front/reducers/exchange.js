@@ -9,7 +9,6 @@ export const EXCHANGE_INSERT_ERROR = "EXCHANGE_INSERT_FAIL"
 
 
 export const ExchangeInsert_REQUEST = (data) => {
-    console.log("들어옴 --- ",data);
     return {
         type: EXCHANGE_INSERT_REQUEST,
         data
