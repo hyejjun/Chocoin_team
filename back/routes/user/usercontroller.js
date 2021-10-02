@@ -33,6 +33,7 @@ let login_post = (req,res) => {
 let mypage_get = (req,res) => {
     let query = `select ~`
     get_data(req,res,data)
+
 }
 
 let mypage_post = (req,res) => {
