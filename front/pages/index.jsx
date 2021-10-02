@@ -3,7 +3,7 @@ import RootProvider from '../Providers/rootProvider'
 import Orderbook from '../components/Orderbook'
 import Trade from '../components/Trade'
 import Styled from 'styled-components'
-import Transaction from '../components/Transaction'
+import Transactionhistory from '../components/Transactionhistory'
 
 const index = () => {
     return (
@@ -12,7 +12,7 @@ const index = () => {
                 <OrderInner>
                     <Orderbook />
                     <Trade />
-                    <Transaction/>
+                    <Transactionhistory/>
                 </OrderInner>
             </OrderboxSection>
         </RootProvider>

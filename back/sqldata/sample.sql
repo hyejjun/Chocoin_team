@@ -1,0 +1,1 @@
+insert into asset (pk,userid,input,output) values(1,'2',3,4,'매수',0);
