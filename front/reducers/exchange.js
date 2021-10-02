@@ -8,6 +8,7 @@ export const EXCHANGE_INSERT_SUCCESS = "EXCHANGE_INSERT_SUCCESS"
 export const EXCHANGE_INSERT_ERROR = "EXCHANGE_INSERT_FAIL"
 
 
+
 export const ExchangeInsert_REQUEST = (data) => {
     console.log("들어옴 --- ",data);
     return {
@@ -27,6 +28,9 @@ export const ExchangeInsert_ERROR = () => {
         type: EXCHANGE_INSERT_ERROR,
     }
 }
+
+
+
 
 const reducer = (state = initalState, action) => {
     switch (action.type) {
