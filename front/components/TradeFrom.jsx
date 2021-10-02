@@ -1,5 +1,4 @@
 import Styled from "styled-components"
-import useInput from '../hooks/useInput'
 import { useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { ExchangeInsert_REQUEST } from "../reducers/exchange"
