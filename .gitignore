@@ -2,3 +2,4 @@
 front/.next**
 front/package-lock.json
 back/package-lock.json
+back/db_config.json

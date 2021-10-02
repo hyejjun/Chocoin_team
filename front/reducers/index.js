@@ -1,7 +1,8 @@
 import React from 'react'
 import {HYDRATE} from 'next-redux-wrapper'
 import { combineReducers } from 'redux'
-import post from './post'
+import exchange from './exchange'
+import mypage from './mypage'
 
 const rootReducer = (state,action) => {
     switch(action.type){
@@ -9,7 +10,7 @@ const rootReducer = (state,action) => {
             return action.payload
         default:{
             const combineReducer = combineReducers({
-                post, // 저희가만들거 
+                exchange,mypage
             })
             return combineReducer(state,action)
         }

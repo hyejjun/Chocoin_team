@@ -1,0 +1,7 @@
+{
+    "host:":"localhost",
+    "user":"root",
+    "password":"root",
+    "database":"chocoin_db",
+    "connectionLimit":30
+}
