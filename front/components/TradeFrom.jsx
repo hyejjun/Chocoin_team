@@ -5,7 +5,6 @@ import { ExchangeInsert_REQUEST } from "../reducers/exchange"
 
 
 const TradeForm = (props) => {
-
     const dispatch = useDispatch()
 
     const price = useInput(0)

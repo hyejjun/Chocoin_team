@@ -8,9 +8,10 @@ function exchangeAPI(data) {
 
 function* exchange(action) { 
     const result = yield call(exchangeAPI, action.data)
+
     
     const { data } = result
-    console.log(data);
+    console.log(data,'여기느느는ㄴ');
 
     // if (data.result === 'OK') {
     //     yield put({
