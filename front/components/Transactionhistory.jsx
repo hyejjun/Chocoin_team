@@ -2,6 +2,7 @@ import Styled from "styled-components"
 import useInput from '../hooks/useInput'
 
 const Transactionhistory = (props)=>{
+    //console.log(props,'propssssssssssssssss')
     
     
     return(

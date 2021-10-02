@@ -2,6 +2,7 @@ import React from 'react'
 import {HYDRATE} from 'next-redux-wrapper'
 import { combineReducers } from 'redux'
 import exchange from './exchange'
+import tradingrecord from './tradingrecord'
 
 const rootReducer = (state,action) => {
     switch(action.type){
@@ -9,7 +10,7 @@ const rootReducer = (state,action) => {
             return action.payload
         default:{
             const combineReducer = combineReducers({
-                exchange,  
+                exchange, tradingrecord
             })
             return combineReducer(state,action)
         }
