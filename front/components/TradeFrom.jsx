@@ -1,5 +1,6 @@
 import Styled from "styled-components"
 import useInput from '../hooks/useInput'
+import { useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { ExchangeInsert_REQUEST } from "../reducers/exchange"
 
@@ -7,8 +8,17 @@ import { ExchangeInsert_REQUEST } from "../reducers/exchange"
 const TradeForm = (props) => {
     const dispatch = useDispatch()
 
-    const price = useInput(0)
-    const qnt = useInput(0)
+    const [price, setPrice] = useState(0)
+    const [qnt, setQnt] = useState(0)
+
+    const onChangePrice = e => {
+        const {value} = {...e.target}
+        setPrice(value)
+    }
+    const onChangeQnt = e => {
+        const {value} = {...e.target}
+        setQnt(value)
+    }
 
     const handelSubmit = (e) => {
         e.preventDefault()
@@ -16,10 +26,13 @@ const TradeForm = (props) => {
         const data = {
             price: price.value,
             qnt: qnt.value,
-            total: (price.value) * (qnt.value),
+            total: (price) * (qnt),
             type: props.type
         }
         dispatch(ExchangeInsert_REQUEST(data))
+
+        setPrice(0)
+        setQnt(0)
     }
 
     return (
@@ -44,7 +57,7 @@ const TradeForm = (props) => {
                             </p>
                         </div>
                         <FromDes>
-                            <input type="number" {...price} min="0"/> <label>KRW</label>
+                            <input type="number" value={price} onChange={onChangePrice} min="0"/> <label>KRW</label>
                         </FromDes>
                     </FromList>
                     <FromList>
@@ -52,7 +65,7 @@ const TradeForm = (props) => {
                             <p>{props.type === 'ASK' ? '매수' : '매도'}수량</p>
                         </div>
                         <FromDes>
-                            <input type="number" {...qnt} min="0"/> <label>CHC</label>
+                            <input type="number" value={qnt} onChange={onChangeQnt} min="0"/> <label>CHC</label>
                         </FromDes>
                     </FromList>
                     <FromList>
@@ -62,7 +75,7 @@ const TradeForm = (props) => {
                         <FromDes>
                             <p>
                                 <span>
-                                    {(price.value) * (qnt.value)}
+                                    {(price) * (qnt)}
                                 </span>
                             </p>
                         </FromDes>
