@@ -3,7 +3,6 @@ import axios from 'axios'
 import { url } from './url'
 
 function exchangeAPI(data) {
-    console.log(data,'dataaaaaaaaaaaaaaaaaaaaaaaaa')
     return axios.post(`${url}/coin/order`,data)
 }
 
@@ -12,7 +11,7 @@ function* exchange(action) {
 
     
     const { data } = result
-    console.log(data);
+    console.log(data,'여기느느는ㄴ');
 
     // if (data.result === 'OK') {
     //     yield put({
