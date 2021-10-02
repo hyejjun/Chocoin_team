@@ -12,12 +12,12 @@ const TradeForm = (props) => {
 
     const handelSubmit = (e) => {
         e.preventDefault()
-        
+
         const data = {
-            price : price.value,
-            qnt : qnt.value,
-            total : (price.value)*(qnt.value),
-            type : props.type
+            price: price.value,
+            qnt: qnt.value,
+            total: (price.value) * (qnt.value),
+            type: props.type
         }
         dispatch(ExchangeInsert_REQUEST(data))
     }
@@ -44,7 +44,7 @@ const TradeForm = (props) => {
                             </p>
                         </div>
                         <FromDes>
-                            <input type="number" {...price} /> <label>KRW</label>
+                            <input type="number" {...price} min="0"/> <label>KRW</label>
                         </FromDes>
                     </FromList>
                     <FromList>
@@ -52,7 +52,7 @@ const TradeForm = (props) => {
                             <p>{props.type === 'ASK' ? '매수' : '매도'}수량</p>
                         </div>
                         <FromDes>
-                            <input type="number" {...qnt}/> <label>CHC</label>
+                            <input type="number" {...qnt} min="0"/> <label>CHC</label>
                         </FromDes>
                     </FromList>
                     <FromList>
@@ -62,7 +62,7 @@ const TradeForm = (props) => {
                         <FromDes>
                             <p>
                                 <span>
-                                    {(price.value)*(qnt.value)}
+                                    {(price.value) * (qnt.value)}
                                 </span>
                             </p>
                         </FromDes>

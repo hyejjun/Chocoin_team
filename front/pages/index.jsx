@@ -26,9 +26,7 @@ const OrderboxSection = Styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    /* flex: 1; */
     margin-top: 2rem;
-    border-top: 1px solid #d9d9d9;
     padding: 1rem 0;
 `
 
