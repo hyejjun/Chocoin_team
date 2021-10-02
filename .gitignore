@@ -1,3 +1,4 @@
 */node_modules**
 front/.next**
 front/package-lock.json
+back/package-lock.json
