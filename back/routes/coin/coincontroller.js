@@ -61,8 +61,9 @@ let coin_info = (req,res) => {
 
 
 let get_orderdata = (req,res) => {
-    let {price,qnt,total,type} = req.body
-    let query =  `insert into ordertable (pk,userid,price,qty,ordertype) values('?','userid',"${price}","${qnt}","${type}")`
+    //let {price,qnt,type} = req.body
+    //let query =  `insert into ordertable (pk,userid,price,qty,ordertype) values(2,'userid',"${price}","${qnt}","${type}")`
+    let query =  `insert into ordertable (pk,userid,price,qty,ordertype) values(5,'userid',1,1,1)`
     send_data(req,res,query) 
 }
 

@@ -25,7 +25,8 @@ function send_data(req,res,querysyn){
             if(results==undefined){
                 res.json({'msg':'fail'})
             }else{
-                res.json({'msg':'suc',results})
+                console.log(results)
+                res.json({'msg':'suc'})
             }
             connection.release();
         })
