@@ -25,7 +25,6 @@ const TradeForm = (props,state) => {
 
     const handelSubmit = (e) => {
         e.preventDefault()
-
         const data = {
             price: price.value,
             qnt: qnt.value,
@@ -59,7 +58,7 @@ const TradeForm = (props,state) => {
                     <FromList>
                         <div>
                             <p>
-                                {props.type === 'ASK' ? '매수' : '매도'} 가격
+                                {props.type === 'BUY' ? '매수' : '매도'} 가격
                             </p>
                         </div>
                         <FromDes>
@@ -68,7 +67,7 @@ const TradeForm = (props,state) => {
                     </FromList>
                     <FromList>
                         <div>
-                            <p>{props.type === 'ASK' ? '매수' : '매도'}수량</p>
+                            <p>{props.type === 'BUY' ? '매수' : '매도'}수량</p>
                         </div>
                         <FromDes>
                             <input type="number" value={qnt} onChange={onChangeQnt} min="0"/> <label>CHC</label>
@@ -76,7 +75,7 @@ const TradeForm = (props,state) => {
                     </FromList>
                     <FromList>
                         <div>
-                            <p>{props.type === 'ASK' ? '매수' : '매도'}총액</p>
+                            <p>{props.type === 'BUY' ? '매수' : '매도'}총액</p>
                         </div>
                         <FromDes>
                             <p>
@@ -89,7 +88,7 @@ const TradeForm = (props,state) => {
                     <FromSubmit>
                         <FormSubmitBtn type="submit" flag={props.type}>
                             {
-                                props.type === 'ASK' ? '매수' : '매도'
+                                props.type === 'BUY' ? '매수' : '매도'
                             }
                         </FormSubmitBtn>
                     </FromSubmit>
@@ -174,5 +173,5 @@ const FormSubmitBtn = Styled.button`
     box-sizing: border-box;
     cursor: pointer;
     text-align: center;
-    background : ${props => (props.flag === "ASK" ? 'rgb(241, 79, 79)' : 'rgb(120, 120, 227)')};
+    background : ${props => (props.flag === "BUY" ? 'rgb(241, 79, 79)' : 'rgb(120, 120, 227)')};
 `

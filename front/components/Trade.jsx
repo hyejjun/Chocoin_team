@@ -3,26 +3,26 @@ import Styled from "styled-components"
 import TradeForm from "./TradeFrom"
 
 const Trade = () => {
-    const [type, setType] = useState('ASK')
+    const [type, setType] = useState('BUY')
     return (
         <>
             <TradeWrap>
                 <TradeHead>
                     <TradeMethod>
-                        <ASK
+                        <BUY
                             flag = {type}
-                            onClick={() => setType('ASK')}
+                            onClick={() => setType('BUY')}
                         >
                             매수
-                        </ASK>
+                        </BUY>
                     </TradeMethod>
                     <TradeMethod>
-                        <BID
+                        <SELL
                             flag = {type}
-                            onClick={() => setType('BID')}
+                            onClick={() => setType('SELL')}
                         >
                             매도
-                        </BID>
+                        </SELL>
                     </TradeMethod>
                 </TradeHead>
                 <TradeForm type={type} />
@@ -55,12 +55,12 @@ const TradeMethod = Styled.div`
     color: #b9b9b9;
 `
 
-const ASK = Styled.p`
-    text-decoration :  ${props=>(props.flag==="ASK"? 'underline' : 'none')};
-    color :  ${props=>(props.flag==="ASK"? 'black' : 'none')};
+const BUY = Styled.p`
+    text-decoration :  ${props=>(props.flag==="BUY"? 'underline' : 'none')};
+    color :  ${props=>(props.flag==="BUY"? 'black' : 'none')};
 `
 
-const BID = Styled.p`
-    text-decoration:  ${props=>(props.flag==="BID"? 'underline' : 'none')};
-    color :  ${props=>(props.flag==="BID"? 'black' : 'none')};
+const SELL = Styled.p`
+    text-decoration:  ${props=>(props.flag==="SELL"? 'underline' : 'none')};
+    color :  ${props=>(props.flag==="SELL"? 'black' : 'none')};
 `
