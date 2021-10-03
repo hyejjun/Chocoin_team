@@ -36,23 +36,7 @@ function createbody(method,params=[]){
 // 브라우저에 localhost:3002/getblockcount
 
 
-// 매도 매수 페이지 들어온 경우---------------------------------------------
-// let coin_info = (req,res) => {
-//      let query = `select * from transactions order by contracttime desc`;
-//     get_data(req,res,)
-// }
 
-
-// 매도 매수 클릭 한 경우------------------------------------------
-// let buyClick = (req,res) => {
-//     let {price,qnt,total,type} = req.body
-//     if(type=='매수'){
-//         let query = ``
-//     }
-
-// }
-// 질문?=================================================
-// connection pool을 이용한 경우에도 async await를 사용해야 하는가
 
 
 
@@ -63,7 +47,7 @@ function createbody(method,params=[]){
 
 
 let coin_info = (req,res) => { 
-    //let query = `select * from privatetransaction`
+    //let query = `select * from transactions order by contracttime desc`;
     let query = `select * from asset`
     get_data(req,res,query)
 };
@@ -71,7 +55,7 @@ let coin_info = (req,res) => {
 
 let get_orderdata = (req,res) => {
     let {price,qnt,total,type} = req.body
-    let query =  `insert into ordertable (pk,userid,price,qty,ordertype) values('?','userid',"${price}","${qnt}","${type}")`
+    let query =  `insert into ordertable (pk,userid,price,qty,ordertype,active) values('?','userid',"${price}","${qnt}","${type}")`
     send_data(req,res,query) 
 }
 
