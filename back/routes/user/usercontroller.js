@@ -7,8 +7,24 @@
 // mypage 수정
 
 const mysql = require('mysql')
+require('dotenv').config()
 const config = require('../../db_config.json')
 const {get_data, send_data} = require('../../db.js')
+
+const headers = {"Content-type":"application/json"}
+const USER = process.env.RPC_USER;
+const PASS = process.env.RPC_PASSWORD;
+const RPCPORT = process.env.RPC_PORT;
+const ID_STRING = 'chocoin_exchange';
+const ACCOUNT = 'chocoin';
+const url = `http://${USER}:${PASS}@127.0.0.1:${RPCPORT}`;
+// js파일과 rpc연결을 위한 url
+
+function createbody(method,params=[]){
+    let obj = {jsonrpc:"1.0", id:ID_STRING,method,params};
+    return JSON.stringify(obj);
+}
+
 
 
 let join_get = (req,res) => {
