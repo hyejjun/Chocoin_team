@@ -4,6 +4,7 @@ import { takeLatest, call, put } from "redux-saga/effects"
 function joinAPI(data){
     return axios.post(`${url}/user/join`,data);
 }
+
 function* join(action){
     let result = yield call(joinAPI,action.data);
     let {data} = result;
