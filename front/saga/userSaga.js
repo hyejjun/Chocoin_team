@@ -40,9 +40,30 @@ function* id_check(action){
     }
 }
 
+function loginAPI(data){
+    return axios.post(`${url}/user/login`,data);
+}
+function* login(action){
+    let result = yield call(loginAPI,action.data);
+    let {data} = result;
+    if(data.results !== undefined){
+        yield put({
+            type:'USER_LOGIN_SUCCESS',
+            data:'OK',
+            // user_info:data.results
+        })
+    }else{
+        yield put({
+            type:'USER_LOGIN_ERROR',
+            data:'아이디와 비밀번호를 확인해주세요'
+        })
+    }
+}
+
 function* watchUser(){
     yield takeLatest('USER_JOIN_REQUEST',join);
     yield takeLatest('USER_ID_CHECK',id_check);
+    yield takeLatest('USER_LOGIN_REQUEST',login);
 }
 
 export default function* userSaga(){
