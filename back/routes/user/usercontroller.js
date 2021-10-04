@@ -52,13 +52,15 @@ let login_post = (req, res) => {
 }
 
 let mypage_get = (req, res) => {
-    let query = `select ~`
-    get_data(req, res, data)
+    let query = `select * from assetrecord where userid = ${userid}`
+    get_data(req, res, query)
 
 }
 
 let mypage_post = (req, res) => {
-    let query = `insert into user () values()`
+    let{input,output,totalasset} = req.body
+    console.log(req.body)
+    let query = `insert into assetrecord(pk,userid,input,output,totalasset) values(10,'userid',${input},${output},${totalasset})`
     send_data(req, res, query)
 }
 
