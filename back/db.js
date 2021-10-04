@@ -1,6 +1,6 @@
 const mysql = require('mysql')
 const config = require('./db_config.json')
-const pool = mysql.createPool(config)
+const pool =  mysql.createPool(config)
 
 function get_data(req,res,querysyn){
     pool.getConnection((err,connection)=>{
@@ -25,7 +25,8 @@ function send_data(req,res,querysyn){
             if(results==undefined){
                 res.json({'msg':'fail'})
             }else{
-                res.json({'msg':'suc',results})
+                console.log(results)
+                res.json({'msg':'suc'})
             }
             connection.release();
         })
