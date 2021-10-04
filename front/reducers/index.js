@@ -6,7 +6,6 @@ import tradingrecord from './tradingrecord'
 import mypage from './mypage'
 import user from './user'
 
-
 const rootReducer = (state,action) => {
     switch(action.type){
         case HYDRATE:
