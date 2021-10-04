@@ -5,11 +5,21 @@ const morgan = require('morgan');
 require('dotenv').config('env');
 const router = require('./routes');
 const bodyParser = require('body-parser');
+const expressSession = require('express-session');
 
 const cors = require('cors');
 const config = require('./db_config.json');
 
-
+app.use(expressSession({
+    resave:false,
+    saveUninitialized:false,
+    secret:'VEBENEKEOWDK',
+    cookie:{
+        httpOnly:true,
+        secure:false,
+    },
+    name:'token',
+}))
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());

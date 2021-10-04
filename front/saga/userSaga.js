@@ -41,7 +41,7 @@ function* id_check(action){
 }
 
 function loginAPI(data){
-    return axios.post(`${url}/user/login`,data);
+    return axios.post(`${url}/user/login`,data,{withCredentials:true});
 }
 function* login(action){
     let result = yield call(loginAPI,action.data);
@@ -60,10 +60,31 @@ function* login(action){
     }
 }
 
+function cookieAPI(){
+    return axios.get(`http://localhost:3000`,{withCredentials:true});
+}
+function* cookie_check(action){
+    let result = yield call(cookieAPI,action);
+    let {data} = result;
+    
+    if(data.cookie === 'success'){
+        yield put({
+            type:'USER_COOKIE_SUCCESS',
+            data:data.cookie,
+        })
+    }else{
+        yield put({
+            type:'USER_COOKIE_ERROR',
+            data:data.cookie,
+        })
+    }
+}
+
 function* watchUser(){
     yield takeLatest('USER_JOIN_REQUEST',join);
     yield takeLatest('USER_ID_CHECK',id_check);
     yield takeLatest('USER_LOGIN_REQUEST',login);
+    yield takeLatest('USER_COOKIE_CHECK',cookie_check);
 }
 
 export default function* userSaga(){

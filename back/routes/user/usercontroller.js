@@ -42,32 +42,6 @@ let join_post = (req, res) => {
     res.send('join');
 }
 
-<<<<<<< HEAD
-=======
-let login_get = (req, res) => {
-    res.render('로그인 창에 들어왔을 때')
-
-}
-
-let login_post = (req, res) => {
-    let query = `insert into usertable (userid,userpw) values('id','pw')`
-    send_data(req, res, query)
-}
-
-let mypage_get = (req, res) => {
-    let query = `select * from assetrecord where userid = ${userid}`
-    get_data(req, res, query)
-
-}
-
-let mypage_post = (req, res) => {
-    let{input,output,totalasset} = req.body
-    console.log(req.body)
-    let query = `insert into assetrecord(pk,userid,input,output,totalasset) values(10,'userid',${input},${output},${totalasset})`
-    send_data(req, res, query)
-}
-
->>>>>>> eb0e94519f343a2008771b706f43ca30654c6379
 let id_check = (req, res) => {
     let userid = req.body.data;
     pool.getConnection((err, connection) => {
@@ -95,6 +69,7 @@ let login_post = (req, res) => {
     let hashedpw = createHash(userpw);
     pool.getConnection((err, connection) => {
         if (err) throw err;
+        let result = {};
         connection.query(`select * from usertable where userid = "${userid}" and userpw = "${hashedpw}"`, (error, results, fileds) => {
             if (error) throw error;
             if (results.length === 0) {
@@ -103,7 +78,7 @@ let login_post = (req, res) => {
                     msg:'로그인 실패'
                 }
                 console.log(result.msg);
-                let test = {result}
+                let test = {result};
                 res.json(test);
             } else {
                 let ctoken = token(userpw,userid);
@@ -112,6 +87,7 @@ let login_post = (req, res) => {
                     msg:'로그인 성공'
                 }
                 let test = {results, ctoken, result};
+                res.cookie('AccessToken',ctoken,{httpOnly:true,secure:true});
                 res.json(test);
                 console.log(result.msg);
             }
@@ -121,13 +97,15 @@ let login_post = (req, res) => {
 }
 
 let mypage_get = (req, res) => {
-    let query = `select ~`
-    get_data(req, res, data)
+    let query = `select * from assetrecord where userid = ${userid}`
+    get_data(req, res, query)
 
 }
 
 let mypage_post = (req, res) => {
-    let query = `insert into user () values()`
+    let{input,output,totalasset} = req.body
+    console.log(req.body)
+    let query = `insert into assetrecord(pk,userid,input,output,totalasset) values(10,'userid',${input},${output},${totalasset})`
     send_data(req, res, query)
 }
 

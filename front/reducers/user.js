@@ -18,24 +18,31 @@ const USER_LOGIN_REQUEST = "USER_LOGIN_REQUEST";
 const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
 const USER_LOGIN_ERROR = "USER_LOGIN_ERROR";
 
+const USER_COOKIE_CHECK = "USER_COOKIE_CHECK";
+const USER_COOKIE_SUCCESS = "USER_COOKIE_SUCCESS";
+const USER_COOKIE_ERROR = "USER_COOKIE_ERROR";
+
 export const user_join_request = data => {
     return {
         type: USER_JOIN_REQUEST,
         data
     }
 }
-
 export const user_id_check = data => {
     return {
         type: USER_ID_CHECK,
         data
     }
 }
-
 export const user_login_request = data => {
     return{
         type: USER_LOGIN_REQUEST,
         data,
+    }
+}
+export const user_cookie_check = () => {
+    return {
+        type:USER_COOKIE_CHECK
     }
 }
 
@@ -97,6 +104,21 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading:false,
                 data:action.data,
+            }
+        case USER_COOKIE_CHECK:
+            return{
+                ...state,
+                loading:true,
+            }
+        case USER_COOKIE_SUCCESS:
+            return{
+                ...state,
+                loading:false,
+            }
+        case USER_COOKIE_ERROR:
+            return{
+                ...state,
+                loading:false,
             }
         default:
             return state
