@@ -1,5 +1,6 @@
 import {all,fork,takeLatest,call,put, take} from 'redux-saga/effects'
 import axios from 'axios'
+import {url} from './url'
 
 function MyPageAPI(data) {
     return axios.get('/mypage',data)
