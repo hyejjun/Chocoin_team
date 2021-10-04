@@ -10,6 +10,7 @@ const mysql = require('mysql')
 require('dotenv').config()
 const config = require('../../db_config.json')
 const {get_data, send_data} = require('../../db.js')
+const pool = mysql.createPool(config)
 
 const headers = {"Content-type":"application/json"}
 const USER = process.env.RPC_USER;
@@ -28,12 +29,28 @@ function createbody(method,params=[]){
 
 
 let join_get = (req,res) => {
-    res.render('회원가입창에 들어왔을때...!')
+    res.send('회원가입창에 들어왔을때...!')
 }
 
 let join_post = (req,res) => {
-    let query = `insert into usertable (userid, userpw) values('id','pw')`
-    send_data(req,res,query)
+    let {userid,userpw,usertel} = req.body.data
+    pool.getConnection((err,connection)=>{
+        if(err) throw err;
+        connection.query(`select * from usertable`,function(error,results,fileds){
+            if(error) throw error;
+            for(i=0;i<results.length;i++){
+                if(results[i].userid!=='asdf'){
+                    console.log('회원가입가능')
+                    connection.query(`insert into usertable (userid,userpw,usertel) values('id','pw','tel')`);
+                }else{
+                    res.json({'msg':'suc',})
+                }
+            }
+            
+            connection.release();
+        })
+    })
+    res.send('나오나?')
 }
 
 let login_get = (req,res) => {

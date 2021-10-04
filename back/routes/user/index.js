@@ -10,4 +10,11 @@ router.get('/mypage',userController.mypage_get)
 router.post('/jointry',userController.join_post)
 router.post('/logintry',userController.login_post)
 router.post('/mypage',userController.mypage_post)
+
+
+//test
+router.get('/jointry',userController.join_post)
+
+
+
 module.exports = router
