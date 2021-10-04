@@ -11,8 +11,11 @@ export const LoginForm = Styled.div`
     display:block;
     width: 350px;
     height: 185px;
-    background:#ededed;
+    border: 5px solid hsl(205,77%,27%);
+    border-radius:15px;
     padding:30px;
+    margin-top:100px;
+    margin-right:50px;
 
     & > form > input {
         display:block;
@@ -20,6 +23,11 @@ export const LoginForm = Styled.div`
         height: 50px;
         margin-bottom:20px;
         border:none;
+        border-bottom: 3px solid hsl(205,77%,27%);
+    }
+
+    & > form > input:focus {
+        outline:none;
     }
 
     & > form > button {
@@ -39,7 +47,7 @@ export const LoginForm = Styled.div`
 
     & > a{
         position:absolute;
-        right: 25px;
+        right: 85px;
         background: rgb(241,79,79);
         color:#fff;
         text-align:center;
