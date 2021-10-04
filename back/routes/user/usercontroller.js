@@ -6,9 +6,9 @@
 // mypage
 // mypage 수정
 
-const mysql = require('mysql')
-const config = require('../../db_config.json')
-const {get_data, send_data} = require('../../db.js')
+const mysql = require('mysql');
+const config = require('../../db_config.json');
+const {get_data, send_data} = require('../../db.js');
 
 
 let join_get = (req,res) => {
@@ -16,7 +16,10 @@ let join_get = (req,res) => {
 }
 
 let join_post = (req,res) => {
-    let query = `insert into usertable (userid, userpw) values('id','pw')`
+    let userid = req.body.userid;
+    let userpw = req.body.userpw;
+    let hashedpw = chash(userpw);
+    let query = `insert into usertable (userid, userpw) values('${userid}','${hashedpw}')`
     send_data(req,res,query)
 }
 
