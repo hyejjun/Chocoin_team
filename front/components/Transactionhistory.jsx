@@ -1,10 +1,38 @@
 import Styled from "styled-components"
 import useInput from '../hooks/useInput'
+import {useSelector} from 'react-redux' 
+import {useState} from 'react'
 
-const Transactionhistory = (props)=>{
-    //console.log(props,'propssssssssssssssss')
-    
-    
+
+
+const Transactionhistory = ()=>{
+    const [records,setRecords] = useState();
+    const data = useSelector(state=>state.tradingrecord.traderecord)
+    // const test = () => {    
+    //     if(data==undefined){
+    //         return setRecords(data)
+            
+    //     }else{
+    //         const list = () => {
+    //             let recorditem = data.map((v)=>{
+    //                 return(
+    //                     <tr key={v.pk}>
+    //                         <td>{v.ordertime}</td>
+    //                         <td>{v.ordertype}</td>
+    //                         <td>{v.price}</td>
+    //                         <td>{v.qty}</td>
+    //                         <td>{v.price * v.qty}</td>
+    //                     </tr>
+    //                 )
+    //             })
+    //             // console.log(recorditem,'recorditemmmmmmmmmmmmmmmmmmmmmmmmm')
+    //             console.log('나오나')
+    //             const list
+    //         }
+    //         return list
+    //     }
+    // }
+   
     return(
         <>
             <TransactionWrap>
@@ -19,51 +47,9 @@ const Transactionhistory = (props)=>{
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>2021-05-07</td>
-                            <td>매도</td>
-                            <td>25000000</td>
-                            <td>3</td>
-                            <td>75000000</td>
-                        </tr>
-                        <tr>
-                            <td>2021-05-06</td>
-                            <td>매수</td>
-                            <td>25000000</td>
-                            <td>3</td>
-                            <td>75000000</td>
-                        </tr>
-                        <tr>
-                            <td>2021-05-04</td>
-                            <td>매도</td>
-                            <td>25000000</td>
-                            <td>3</td>
-                            <td>75000000</td>
-                        </tr>
-                        <tr>
-                            <td>2021-05-03</td>
-                            <td>매수</td>
-                            <td>25000000</td>
-                            <td>3</td>
-                            <td>75000000</td>
-                        </tr>
-                        <tr>
-                            <td>2021-05-01</td>
-                            <td>매도</td>
-                            <td>25000000</td>
-                            <td>3</td>
-                            <td>75000000</td>
-                        </tr>
-                        <tr>
-                            <td>2021-04-07</td>
-                            <td>매수</td>
-                            <td>25000000</td>
-                            <td>3</td>
-                            <td>75000000</td>
-                        </tr>
+                        {test}
                     </tbody>
                 </table>
-
             </TransactionWrap>
         </>
     )
