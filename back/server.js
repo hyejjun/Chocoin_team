@@ -24,7 +24,6 @@ app.use(morgan('dev'));
 
 app.use('/',router);
 
-
 app.listen(port,()=>{
     console.log('server ',port)
 });
