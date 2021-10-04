@@ -26,18 +26,26 @@ export const LoginForm = Styled.div`
         position:absolute;
         left:30px;
         border:none;
-        background:red;
+        background: rgb(241,79,79);
+        color:#fff;
         width: 116px;
         height: 46px;
+        font-size:1rem;
+    }
+
+    & > form > button:hover{
+        cursor:pointer;
     }
 
     & > a{
         position:absolute;
         right: 25px;
-        background:red;
+        background: rgb(241,79,79);
+        color:#fff;
         text-align:center;
         padding: 15px 13px 13px 13px;
         text-decoration:none;
         width: 90px;
+        font-size:1rem;
     }
 `

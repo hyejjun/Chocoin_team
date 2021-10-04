@@ -7,11 +7,10 @@ const Join = () => {
     return(
         <>
             <Head>
-                <title>Join</title>
+                <title>Chocoin | Join</title>
             </Head>
             <Navigation/>
             <Join_form></Join_form>
-            <Login_form></Login_form>
         </>
     )
 }

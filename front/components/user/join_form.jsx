@@ -13,11 +13,13 @@ const Join_form = () => {
     const userid = useInput('');
     const userpw = useInput('');
 
-    const [passwordCheck,setPasswordCheck] = useState(false);
+    const [passwordCheck,setPasswordCheck] = useState('');
+    const [passwordError,setPasswordError] = useState(false);
 
     const handlePassword = e => {
         const {value} = {...e.target};
-        setPasswordCheck(userpw.value !== value);
+        setPasswordError(userpw.value !== value);
+        setPasswordCheck(value);
     }
 
     const handleSubmit = e => {
@@ -30,13 +32,29 @@ const Join_form = () => {
             alert('아이디를 확인해주세요');
             return;
         }else{
-            dispatch(user_join_request(user_data));
+            if(userpw.value !== passwordCheck){
+                alert('비밀번호를 확인해주세요.');
+                setPasswordError(true);
+                return
+            }else{
+                setPasswordError(false)
+                // if(data.id_check == false){
+                //     dispatch(user_join_request(user_data));
+                // }else{
+                //     alert('사용 불가능한 아이디 입니다.');
+                // }
+            }
         }
     }
 
     const checkId = e => {
         const { value } = e.target;
-        value == '' || dispatch(user_id_check(value)); // true아니면 value
+        if(value == ''){
+            return
+        }else{
+            dispatch(user_id_check(value))
+        }
+        // value == '' || dispatch(user_id_check(value)); // true아니면 value
     }
 
     return (
@@ -44,8 +62,10 @@ const Join_form = () => {
             <h1>CHOCOIN</h1>
             <form onSubmit={handleSubmit}>
                 <input type="text" {...userid} placeholder="아이디" name="userid" onMouseOut={checkId} />
-                <input type="text" {...userpw} placeholder="비밀번호" name="userpw" />
-                <input type="text" placeholder="비밀번호 확인" name="userpw_check" onChange={handlePassword} />
+                {data.Id_check === '' ? '' :(data.Id_check ? <div style={{color:'red'}}>사용 불가능한 아이디 입니다.</div>: <div style={{color:'blue'}}>사용가능한 아이디 입니다.</div>)}
+                <input type="password" {...userpw} placeholder="비밀번호" name="userpw" />
+                <input type="password" placeholder="비밀번호 확인" name="userpw_check" onChange={handlePassword} />
+                {passwordError && <div style={{color:"red"}}>비밀번호가 일치하지 않습니다.</div>}
                 <button type="submit">회원가입</button>
             </form>
         </JoinForm>
