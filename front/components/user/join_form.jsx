@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import {useDispatch,useSelector} from "react-redux";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { user_id_check, user_join_request } from "../../reducers/user";
 import { JoinForm } from './join_css'
+import { Redirect } from 'react-router-dom'
 import useInput from "../../hooks/useInput";
 
 
@@ -15,6 +16,7 @@ const Join_form = () => {
 
     const [passwordCheck,setPasswordCheck] = useState('');
     const [passwordError,setPasswordError] = useState(false);
+    const [redirect,setRedirect] = useState(false);
 
     const handlePassword = e => {
         const {value} = {...e.target};
@@ -38,11 +40,11 @@ const Join_form = () => {
                 return
             }else{
                 setPasswordError(false)
-                // if(data.id_check == false){
-                //     dispatch(user_join_request(user_data));
-                // }else{
-                //     alert('사용 불가능한 아이디 입니다.');
-                // }
+                if(data.Id_check == false){
+                    dispatch(user_join_request(user_data));
+                }else{
+                    alert('사용 불가능한 아이디 입니다.');
+                }
             }
         }
     }
@@ -66,7 +68,7 @@ const Join_form = () => {
                 <input type="password" {...userpw} placeholder="비밀번호" name="userpw" />
                 <input type="password" placeholder="비밀번호 확인" name="userpw_check" onChange={handlePassword} />
                 {passwordError && <div style={{color:"red"}}>비밀번호가 일치하지 않습니다.</div>}
-                <button type="submit">회원가입</button>
+                <button onClick={()=>setRedirect(true)} type="submit">회원가입</button>
             </form>
         </JoinForm>
     )

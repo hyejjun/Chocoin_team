@@ -1,8 +1,7 @@
 export const initialState = {
     loading: false,
     isLogin: false,
-    user_info: {},
-    id_check: ''
+    Id_check: ''
 }
 
 const firstState = "firstState"
@@ -22,7 +21,7 @@ export const user_join_request = data => {
     }
 }
 
-export const user_id_check = (data) => {
+export const user_id_check = data => {
     return {
         type: USER_ID_CHECK,
         data
@@ -45,7 +44,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                user_info:action.user_info
+                user_info: action.user_info
             }
         case USER_JOIN_ERROR:
             return {
@@ -56,19 +55,19 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                Id_check: action.data
+                Id_check: action,
             }
         case USER_ID_SUCCESS:
-            return{
+            return {
                 ...state,
-                loading:false,
-                Id_check:action.data
+                loading: false,
+                Id_check: action.data,
             }
         case USER_ID_ERROR:
-            return{
+            return {
                 ...state,
-                loading:false,
-                Id_check:action.data
+                loading: false,
+                Id_check: action.data
             }
         default:
             return state
