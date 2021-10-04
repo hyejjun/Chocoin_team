@@ -13,10 +13,7 @@ const rootReducer = (state,action) => {
             return action.payload
         default:{
             const combineReducer = combineReducers({
-
                 exchange, tradingrecord, mypage, user
-
-
             })
             return combineReducer(state,action)
         }
