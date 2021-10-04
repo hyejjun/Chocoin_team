@@ -1,7 +1,6 @@
 import React from 'react'
 import Styled from 'styled-components'
 import Navigation from '../Layouts/Navigation'
-
 const Mypage = () => {
     return ( 
         <>
