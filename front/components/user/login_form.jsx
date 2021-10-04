@@ -11,7 +11,7 @@ const Login_form = () => {
     const userpw = useInput('');
 
     const handleSubmit = e => {
-        e.precentDefault();
+        e.preventDefault();
         const data = {
             userid: userid.value,
             userpw: userpw.value,

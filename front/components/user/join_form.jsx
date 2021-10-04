@@ -41,6 +41,7 @@ const Join_form = () => {
                 setPasswordError(false)
                 if (data.Id_check == false) {
                     dispatch(user_join_request(user_data));
+                    alert('회원가입이 완료되었습니다.')
                 } else {
                     alert('사용 불가능한 아이디 입니다.');
                 }

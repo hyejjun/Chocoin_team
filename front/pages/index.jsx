@@ -5,8 +5,23 @@ import Orderbook from '../components/Orderbook'
 import Trade from '../components/Trade'
 import Styled from 'styled-components'
 import Transactionhistory from '../components/Transactionhistory'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 const index = () => {
+
+    const data = useSelector(state => state.user);
+
+    useEffect(()=>{
+        if(data.data !== undefined){
+            if(data.data === 'LoginSuc'){
+                Router.push('/')
+            }else if(data.data === '아이디와 비밀번호를 확인해주세요'){
+                alert(data.data)
+            }
+        }
+    },[data])
+
     return (
         <>
             <RootProvider>
@@ -18,7 +33,7 @@ const index = () => {
                         </OrderInner>
                     </OrderboxSection>
                     <Transactionhistory />
-                    <Login_form/>
+                    {data.data === undefined ? <Login_form/> : ''}
                 </OrderboxWrpa>
             </RootProvider>
         </>

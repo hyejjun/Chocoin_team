@@ -11,7 +11,8 @@ require('dotenv').config()
 const config = require('../../db_config.json')
 const { get_data, send_data } = require('../../db.js')
 const pool = mysql.createPool(config)
-const createHash = require('../../chash')
+const createHash = require('../../chash');
+const token = require('../../jwt');
 
 const headers = { "Content-type": "application/json" }
 const USER = process.env.RPC_USER;
@@ -41,27 +42,6 @@ let join_post = (req, res) => {
     res.send('join');
 }
 
-let login_get = (req, res) => {
-    res.render('로그인 창에 들어왔을 때')
-
-}
-
-let login_post = (req, res) => {
-    let query = `insert into usertable (userid,userpw) values('id','pw')`
-    send_data(req, res, query)
-}
-
-let mypage_get = (req, res) => {
-    let query = `select ~`
-    get_data(req, res, data)
-
-}
-
-let mypage_post = (req, res) => {
-    let query = `insert into user () values()`
-    send_data(req, res, query)
-}
-
 let id_check = (req, res) => {
     let userid = req.body.data;
     pool.getConnection((err, connection) => {
@@ -78,6 +58,51 @@ let id_check = (req, res) => {
             connection.release();
         })
     })
+}
+
+let login_get = (req, res) => {
+    res.render('로그인 창에 들어왔을 때')
+}
+
+let login_post = (req, res) => {
+    let {userid,userpw} = req.body;
+    let hashedpw = createHash(userpw);
+    pool.getConnection((err, connection) => {
+        if (err) throw err;
+        connection.query(`select * from usertable where userid = "${userid}" and userpw = "${hashedpw}"`, (error, results, fileds) => {
+            if (error) throw error;
+            if (results.length === 0) {
+                result = {
+                    result:'Fail',
+                    msg:'로그인 실패'
+                }
+                console.log(result.msg);
+                let test = {result}
+                res.json(test);
+            } else {
+                let ctoken = token(userpw,userid);
+                result = {
+                    result:'LoginSuc',
+                    msg:'로그인 성공'
+                }
+                let test = {results, ctoken, result};
+                res.json(test);
+                console.log(result.msg);
+            }
+            connection.release();
+        })
+    })
+}
+
+let mypage_get = (req, res) => {
+    let query = `select ~`
+    get_data(req, res, data)
+
+}
+
+let mypage_post = (req, res) => {
+    let query = `insert into user () values()`
+    send_data(req, res, query)
 }
 
 module.exports = {
