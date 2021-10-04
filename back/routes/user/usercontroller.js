@@ -42,8 +42,6 @@ let join_post = (req, res) => {
     res.send('join');
 }
 
-<<<<<<< HEAD
-=======
 let login_get = (req, res) => {
     res.render('로그인 창에 들어왔을 때')
 
@@ -56,7 +54,7 @@ let login_post = (req, res) => {
 
 let mypage_get = (req, res) => {
     let query = `select * from assetrecord where userid = ${userid}`
-    get_data(req, res, query)
+    send_data(req, res, query)
 
 }
 
@@ -67,7 +65,6 @@ let mypage_post = (req, res) => {
     send_data(req, res, query)
 }
 
->>>>>>> eb0e94519f343a2008771b706f43ca30654c6379
 let id_check = (req, res) => {
     let userid = req.body.data;
     pool.getConnection((err, connection) => {

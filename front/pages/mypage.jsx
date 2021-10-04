@@ -2,10 +2,14 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Styled from 'styled-components'
 import Navigation from '../Layouts/Navigation'
+import { MypageGet_REQUEST } from '../reducers/mypage'
+
 
 const Mypage = () => {
-  const Dispatch = useDispatch()
-  const 
+  const Dispatch = useDispatch();
+  const data = useSelector(state=>state.mypage.mypaged);
+        MypageGet_REQUEST(data)
+        Dispatch(MypageGet_REQUEST)
     return ( 
         <>
         <Navigation/>
@@ -42,7 +46,6 @@ const Mypage = () => {
                               </tr> */}
                           </thead>
                           <tbody>
-                              {/* {tmp} */}
                               {/* <tr>
                                   <td>2021-09-03</td>
                                   <td>chocoin</td>

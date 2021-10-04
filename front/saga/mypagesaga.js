@@ -3,7 +3,7 @@ import axios from 'axios'
 import {url} from './url'
 
 function MyPageAPI(data) {
-    return axios.get(`${url}/user/mypage`,data)
+    return axios.get(`${url}/user/mypage_get`,data)
 }
 
 function* MyPage(action) { 
