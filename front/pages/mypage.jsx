@@ -15,19 +15,35 @@ const Mypage = () => {
                   </Mypagetop>
                   <MypageNav>
                   <div>
-                        <div>잔고</div>
+                        <div id="KRW">보유 KRW</div>
+                        <div id="ALL">총 보유자산</div>
                   </div>
                   </MypageNav>
                   <Myhistory>
-                  <ul>
-                        <li>체결시간</li>
-                        <li>코인명</li>
-                        <li>종류</li>
-                        <li>거래수량</li>
-                        <li>거래단가</li>
-                        <li>거래금액</li>
-                        <li>주문시간</li>
-                  </ul>
+                      <table>
+                          <thead>
+                              <tr>
+                                  <th>체결시간</th>
+                                  <th>코인명</th>
+                                  <th>종류</th>
+                                  <th>거래수량</th>
+                                  <th>거래단가</th>
+                                  <th>거래금액</th>
+                                  <th>주문시간</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td>2021-09-03</td>
+                                  <td>chocoin</td>
+                                  <td>cho</td>
+                                  <td>3</td>
+                                  <td>1000</td>
+                                  <td>3000</td>
+                                  <td>2021-09-03</td>
+                              </tr>
+                          </tbody>
+                      </table>
                   </Myhistory>
               </div>
          
@@ -63,17 +79,40 @@ const Mypagetop = Styled.div`
 `
 
 const MypageNav = Styled.div`
-    width : 25%;
-    height: 200px;
-    margin : 10px 20px;
+    box-sizing: border-box;
+    width:100%;
+    padding: 0 300px;
+    border-collapse:collapse;
+    & #KRW, & #ALL {
+        width: 45%;
+        height: 100px;
+        float:left;
+        color:#666;
+        display: flex;
+        align-items: center;
+    }
+    & #KRW{
+        border-right: #eeee;
+    }
 `
 
-const Myhistory = Styled.ul`
-        margin-left : 20px;
-        & li {
-            float:left;
-            width:200px;
+const Myhistory = Styled.div`
+       box-sizing:border-box;
+        & table {
+            width:100%;
             background-color: #f9fafc;
             color: #666;
         }
+
+        & > table > thead > tr > th, & > table > tbody > tr > td{
+            height:25px;
+            font-size:15px;
+            vertical-align:center;
+            background-color:hsl(205, 77%, 27%);
+            color:white;
+            line-height:30px;
+        }
+        & > table > tbody > tr >td{
+        text-align:center;
+    }
 `
