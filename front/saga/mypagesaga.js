@@ -14,19 +14,19 @@ function* MyPage(action) {
 
     // if (data.result === 'OK') {
     //     yield put({
-    //         type: 'EXCHANGE_INSERT_SUCCESS',
+    //         type: 'MYPAGE_GET_SUCCESS',
     //         data: data.msg
     //     })
     // } else {
     //     yield put({
-    //         type: 'EXCHANGE_INSERT_ERROR',
+    //         type: 'MYPAGE_GET_ERROR',
     //         data: data.msg
     //     })
     // }
 }
 
 function* reqMyPage() {
-    yield takeLatest('EXCHANGE_INSERT_REQUEST', MyPage)    
+    yield takeLatest('MYPAGE_GET_REQUEST', MyPage)    
 }
 
 export default function* MyPage(){
