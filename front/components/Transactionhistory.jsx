@@ -6,7 +6,6 @@ const Transactionhistory = () => {
     const data = useSelector(state => state.tradingrecord.traderecord)
     let list = []
     if (data !== undefined) {
-        // console.log(data);
         let reverseitem = data.map(item => item).reverse()
         list = reverseitem.map((v) => {
             return (

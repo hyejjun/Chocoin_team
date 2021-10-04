@@ -1,14 +1,12 @@
-import Head from 'next/head';
 import Login_form from '../../components/user/login_form';
+import Router from 'next/router'
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 const Login = () => {
+
     return(
-        <>
-            <Head>
-                <title>Chocoin | Login</title>
-            </Head>
-            <Login_form></Login_form>
-        </>
+        <Login_form></Login_form>
     )
 }
 

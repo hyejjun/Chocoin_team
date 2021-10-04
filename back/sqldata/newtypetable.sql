@@ -5,7 +5,7 @@ use chocoin_db;
 
 CREATE TABLE IF NOT EXISTS usertable(
     userid VARCHAR(50) NOT NULL PRIMARY KEY,
-    userpw INT NOT NULL,
+    userpw VARCHAR(50) NOT NULL,
     usertel INT
 )   engine=innoDB default charset=utf8mb4;
 

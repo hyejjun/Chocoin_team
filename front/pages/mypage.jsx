@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import Styled from 'styled-components'
 import Navigation from '../Layouts/Navigation'
 const Mypage = () => {
+  const dispatch = useDispatch()
     return ( 
         <>
         <Navigation/>
@@ -22,6 +24,12 @@ const Mypage = () => {
                       <table>
                           <thead>
                               <tr>
+                                  <th>입금</th>
+                                  <th>출금</th>
+                                  <th>총 보유자산</th>
+                                  <th>거래 시간</th>
+                              </tr>
+                              {/* <tr>
                                   <th>체결시간</th>
                                   <th>코인명</th>
                                   <th>종류</th>
@@ -29,10 +37,11 @@ const Mypage = () => {
                                   <th>거래단가</th>
                                   <th>거래금액</th>
                                   <th>주문시간</th>
-                              </tr>
+                              </tr> */}
                           </thead>
                           <tbody>
-                              <tr>
+                              {/* {tmp} */}
+                              {/* <tr>
                                   <td>2021-09-03</td>
                                   <td>chocoin</td>
                                   <td>cho</td>
@@ -40,7 +49,7 @@ const Mypage = () => {
                                   <td>1000</td>
                                   <td>3000</td>
                                   <td>2021-09-03</td>
-                              </tr>
+                              </tr> */}
                           </tbody>
                       </table>
                   </Myhistory>
@@ -48,7 +57,7 @@ const Mypage = () => {
          
         </Mypageatall>
         </>
-    )
+      )
 }
 
 export default Mypage

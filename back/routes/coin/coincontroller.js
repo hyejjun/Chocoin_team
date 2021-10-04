@@ -60,7 +60,7 @@ let tradingview = (req,res)=>{
 let get_orderdata = (req,res) => {
     let {price,qnt,type} = req.body 
     console.log(req.body);
-    let query =  `insert into ordertable (pk,userid,price,qty,ordertype,active,coinname) values(10,'userid',${price},${qnt},"${type}",true,"chocoin")`
+    let query =  `insert into ordertable (pk,userid,price,qty,ordertype,active,coinname) values(13,'userid',${price},${qnt},"${type}",true,"chocoin")`
     // let query =  `insert into ordertable (pk,userid,price,qty,ordertype) values(5,'userid',1,1,1)`
     send_data(req,res,query) 
 }
@@ -69,6 +69,7 @@ let get_orderdata = (req,res) => {
 let trade = (req,res)=>{
     // let query = `select price,qty,ordertype from ordertable where active=1 order by ordertime desc`
     // 여기서 거래 하기 . price 와 qty 일치시.. 거래성사 후 active 1로 바꾸고 transaction 테이블에 올리기
+    let query = `select price,ordertype,sum(qty) as sum,ordertime from ordertable where active=0 group by price,ordertype`
     
 }
 
