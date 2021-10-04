@@ -2,8 +2,7 @@ import Styled from "styled-components"
 import useInput from '../hooks/useInput'
 
 const Transactionhistory = (props)=>{
-    console.log(props
-        ,'propssssssssssssss')
+    //console.log(props,'propssssssssssssssss')
     
     
     return(
@@ -73,9 +72,10 @@ const Transactionhistory = (props)=>{
 export default Transactionhistory
 
 const TransactionWrap = Styled.div`
+    padding-top : 3%;
     box-sizing:border-box;
     &>table{
-        width:90%;
+        width:50%;
         margin-top:20px;
     }
 

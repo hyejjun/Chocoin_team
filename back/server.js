@@ -5,11 +5,10 @@ const morgan = require('morgan');
 require('dotenv').config('env');
 const router = require('./routes');
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
+
 const cors = require('cors');
 const config = require('./db_config.json');
 
-let pool = mysql.createPool(config);
 
 
 app.use(bodyParser.urlencoded({extended:false}));

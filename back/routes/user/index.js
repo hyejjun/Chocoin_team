@@ -4,7 +4,7 @@ const userController = require('./usercontroller.js');
 
 //   /user/
 router.get('/join',userController.join_get);
-router.post('/join',userController.join_post);
+router.post('/join_success',userController.join_post);
 
 router.get('/login',userController.login_get);
 router.get('/mypage',userController.mypage_get);

@@ -2,7 +2,8 @@ import Styled from 'styled-components'
 
 export const Wrapper = Styled.div`
     position:absolute;
-    top:200px;
+    /* top:200px; */
+    top:94px;
     right: 0px;
 `
 

@@ -9,30 +9,33 @@ import Transactionhistory from '../components/Transactionhistory'
 const index = () => {
     return (
         <>
-        <RootProvider>
-            <OrderboxSection>
-                <OrderInner>
-                    <Orderbook />
-                    <Trade />
-                    <Transactionhistory/>
-                </OrderInner>
-            </OrderboxSection>
-        </RootProvider>
-        <Login_form></Login_form>
+            <RootProvider>
+                <OrderboxWrpa>
+                    <OrderboxSection>
+                        <OrderInner>
+                            <Orderbook />
+                            <Trade />
+                        </OrderInner>
+                    </OrderboxSection>
+                    <Transactionhistory />
+                    <Login_form/>
+                </OrderboxWrpa>
+            </RootProvider>
         </>
     )
 }
 
 export default index
 
+const OrderboxWrpa = Styled.div`
+    padding : 0 100px;
+`
 
 const OrderboxSection = Styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    /* flex: 1; */
     margin-top: 2rem;
-    border-top: 1px solid #d9d9d9;
     padding: 1rem 0;
 `
 
