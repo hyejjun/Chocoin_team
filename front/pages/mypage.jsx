@@ -1,30 +1,9 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import Styled from 'styled-components'
 import Navigation from '../Layouts/Navigation'
-
 const Mypage = () => {
-    const [pages, setPage] = useState();
-    const data = useSelector(state=>state.mypage)
-    // const tmp = () =>{
-    //     if(data === undefined){
-    //         return setPage(data)
-    //     }else{
-    //         const list = ()=>{
-    //             let pagelist = data.map((v)=>{
-    //                 return( <tr key={v.pk}>
-    //                             <td>{v.input}</td>
-    //                             <td>{v.output}</td>
-    //                             <td>{v.totalAsset}</td>
-    //                             <td>{v.regdate}</td>
-    //                         </tr>
-    //                     )
-    //             })
-    //             console.log(pagelist,'ffff')
-    //             console.log('dda')
-    //         }
-    //         return list
-    // }
+  const dispatch = useDispatch()
     return ( 
         <>
         <Navigation/>
@@ -61,7 +40,7 @@ const Mypage = () => {
                               </tr> */}
                           </thead>
                           <tbody>
-                              {tmp}
+                              {/* {tmp} */}
                               {/* <tr>
                                   <td>2021-09-03</td>
                                   <td>chocoin</td>
