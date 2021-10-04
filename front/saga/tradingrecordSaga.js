@@ -3,16 +3,14 @@ import axios from 'axios'
 import {url} from './url'
 
 
-function* getTradingRecord(action){
-    const result = yield call(axios.get,`${url}/coin/info`,action)
-    console.log(result,'result')
+function* getTradingRecord(){
+    const result = yield call(axios.get,`${url}/coin/info`)
     const {data} = result
-    console.log(data.msg,'asdfasdf')
     if(data.msg==="suc"){
         console.log('suc')
         yield put({
             type:'GET_TRADINGRECORD_SUCCESS',
-            data
+            data,
         })
     }else{
         yield put({

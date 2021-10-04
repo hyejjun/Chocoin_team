@@ -35,11 +35,13 @@ const reducer = (state = initalState, action) => {
                 loading:true
             }
         case GET_TRADINGRECORD_SUCCESS:
-            console.log(action,'action')
+            console.log(action.data.results,'actionnnnnnnnnn============================')
             return{
                 ...state,
-                data:action.data,
+                traderecord:action.data.results,
                 loading:false,
+                test:'test'
+
             }
         case GET_TRADINGRECORD_ERROR:
             console.log('error')

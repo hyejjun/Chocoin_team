@@ -48,7 +48,8 @@ function createbody(method,params=[]){
 
 let coin_info = (req,res) => { 
     //let query = `select * from transactions order by contracttime desc`;
-    let query = `select * from asset`
+    let query = `select * from ordertable where active=1`
+    
     get_data(req,res,query)
 };
 
