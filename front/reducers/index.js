@@ -4,7 +4,7 @@ import { combineReducers } from 'redux'
 import exchange from './exchange'
 import tradingrecord from './tradingrecord'
 import mypage from './mypage'
-
+import user from './user'
 
 const rootReducer = (state,action) => {
     switch(action.type){
@@ -12,10 +12,7 @@ const rootReducer = (state,action) => {
             return action.payload
         default:{
             const combineReducer = combineReducers({
-
-                exchange, tradingrecord, mypage
-
-
+                exchange, tradingrecord, mypage, user
             })
             return combineReducer(state,action)
         }
