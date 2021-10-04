@@ -14,6 +14,10 @@ const USER_ID_CHECK = "USER_ID_CHECK";
 const USER_ID_SUCCESS = "USER_ID_SUCCESS";
 const USER_ID_ERROR = "USER_ID_ERROR";
 
+const USER_LOGIN_REQUEST = "USER_LOGIN_REQUEST";
+const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
+const USER_LOGIN_ERROR = "USER_LOGIN_ERROR";
+
 export const user_join_request = data => {
     return {
         type: USER_JOIN_REQUEST,
@@ -25,6 +29,13 @@ export const user_id_check = data => {
     return {
         type: USER_ID_CHECK,
         data
+    }
+}
+
+export const user_login_request = data => {
+    return{
+        type: USER_LOGIN_REQUEST,
+        data,
     }
 }
 
@@ -68,6 +79,24 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 Id_check: action.data
+            }
+        case USER_LOGIN_REQUEST:
+            return{
+                ...state,
+                loading:true,
+            }
+        case USER_LOGIN_SUCCESS:
+            return{
+                ...state,
+                IsLogin:true,
+                loading:false,
+                data:action.data,
+            }
+        case USER_LOGIN_ERROR:
+            return{
+                ...state,
+                loading:false,
+                data:action.data,
             }
         default:
             return state
