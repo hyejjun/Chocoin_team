@@ -48,16 +48,21 @@ function createbody(method,params=[]){
 
 let coin_info = (req,res) => { 
     //let query = `select * from transactions order by contracttime desc`;
+
     let query = `select * from ordertable where active=1`
     
     get_data(req,res,query)
+
 };
 
 
 let get_orderdata = (req,res) => {
-    let {price,qnt,total,type} = req.body
-    let query =  `insert into ordertable (pk,userid,price,qty,ordertype,active) values('?','userid',"${price}","${qnt}","${type}")`
+    let {price,qnt,type} = req.body     // 여기까지 오는거 확인했습니다.
+    console.log(req.body);
+    let query =  `insert into ordertable (pk,userid,price,qty,ordertype,active,coinname) values(2,'userid',${price},${qnt},"${type}",true,"chocoin")`
+    // let query =  `insert into ordertable (pk,userid,price,qty,ordertype) values(5,'userid',1,1,1)`
     send_data(req,res,query) 
+
 }
 
 

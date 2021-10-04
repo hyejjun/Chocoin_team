@@ -5,30 +5,26 @@ import { ExchangeInsert_REQUEST } from "../reducers/exchange"
 import { getTradingRecord_REQUEST } from '../reducers/tradingrecord'
 
 
-const TradeForm = (props,state) => {   
-    
-    
- 
+const TradeForm = (props, state) => {
     const dispatch = useDispatch()
 
     const [price, setPrice] = useState(0)
     const [qnt, setQnt] = useState(0)
 
     const onChangePrice = e => {
-        const {value} = {...e.target}
+        const { value } = { ...e.target }
         setPrice(value)
     }
     const onChangeQnt = e => {
-        const {value} = {...e.target}
+        const { value } = { ...e.target }
         setQnt(value)
     }
 
     const handelSubmit = (e) => {
         e.preventDefault()
-
         const data = {
-            price: price.value,
-            qnt: qnt.value,
+            price: price,
+            qnt: qnt,
             total: (price) * (qnt),
             type: props.type
         }
@@ -37,11 +33,10 @@ const TradeForm = (props,state) => {
         setPrice(0)
         setQnt(0)
     }
-    
+
     dispatch(getTradingRecord_REQUEST())
-    console.log(state)
     return (
-        
+
         <>
             <form onSubmit={handelSubmit}>
                 <TradeFrom>
@@ -59,24 +54,24 @@ const TradeForm = (props,state) => {
                     <FromList>
                         <div>
                             <p>
-                                {props.type === 'ASK' ? '매수' : '매도'} 가격
+                                {props.type === 'BUY' ? '매수' : '매도'} 가격
                             </p>
                         </div>
                         <FromDes>
-                            <input type="number" value={price} onChange={onChangePrice} min="0"/> <label>KRW</label>
+                            <input type="number" value={price} onChange={onChangePrice} min="0" /> <label>KRW</label>
                         </FromDes>
                     </FromList>
                     <FromList>
                         <div>
-                            <p>{props.type === 'ASK' ? '매수' : '매도'}수량</p>
+                            <p>{props.type === 'BUY' ? '매수' : '매도'}수량</p>
                         </div>
                         <FromDes>
-                            <input type="number" value={qnt} onChange={onChangeQnt} min="0"/> <label>CHC</label>
+                            <input type="number" value={qnt} onChange={onChangeQnt} min="0" /> <label>CHC</label>
                         </FromDes>
                     </FromList>
                     <FromList>
                         <div>
-                            <p>{props.type === 'ASK' ? '매수' : '매도'}총액</p>
+                            <p>{props.type === 'BUY' ? '매수' : '매도'}총액</p>
                         </div>
                         <FromDes>
                             <p>
@@ -89,7 +84,7 @@ const TradeForm = (props,state) => {
                     <FromSubmit>
                         <FormSubmitBtn type="submit" flag={props.type}>
                             {
-                                props.type === 'ASK' ? '매수' : '매도'
+                                props.type === 'BUY' ? '매수' : '매도'
                             }
                         </FormSubmitBtn>
                     </FromSubmit>
@@ -174,5 +169,5 @@ const FormSubmitBtn = Styled.button`
     box-sizing: border-box;
     cursor: pointer;
     text-align: center;
-    background : ${props => (props.flag === "ASK" ? 'rgb(241, 79, 79)' : 'rgb(120, 120, 227)')};
+    background : ${props => (props.flag === "BUY" ? 'rgb(241, 79, 79)' : 'rgb(120, 120, 227)')};
 `
