@@ -28,6 +28,8 @@ export const JoinForm =Styled.div`
         border:none;
         height: 50px;
         margin:40px auto 20px auto;
+        background: rgb(241,79,79);
+        color:#fff;
         font-size: 18px;
     }
 

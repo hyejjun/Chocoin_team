@@ -33,7 +33,11 @@ let join_get = (req,res) => {
 }
 
 let join_post = (req,res) => {
-    let {userid,userpw,usertel} = req.body.data
+    let userid = req.body.userid;
+    let userpw = req.body.userpw;
+    let hashedpw = chash(userpw);
+    // let query = `insert into usertable (userid, userpw) values('${userid}','${hashedpw}')`
+    // send_data(req,res,query)
     pool.getConnection((err,connection)=>{
         if(err) throw err;
         connection.query(`select * from usertable`,function(error,results,fileds){
@@ -41,7 +45,7 @@ let join_post = (req,res) => {
             for(i=0;i<results.length;i++){
                 if(results[i].userid!=='asdf'){
                     console.log('회원가입가능')
-                    connection.query(`insert into usertable (userid,userpw,usertel) values('id','pw','tel')`);
+                    connection.query(`insert into usertable (userid,userpw,usertel) values('${userid}','${hashedpw}','3')`);
                 }else{
                     res.json({'msg':'suc',})
                 }

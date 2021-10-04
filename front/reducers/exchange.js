@@ -29,8 +29,6 @@ export const ExchangeInsert_ERROR = () => {
 }
 
 
-
-
 const reducer = (state = initalState, action) => {
     switch (action.type) {
         case EXCHANGE_INSERT_REQUEST:
