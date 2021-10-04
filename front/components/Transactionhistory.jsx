@@ -1,39 +1,26 @@
 import Styled from "styled-components"
-import useInput from '../hooks/useInput'
-import {useSelector} from 'react-redux' 
-import {useState} from 'react'
+import { useSelector } from 'react-redux'
+import { useState } from 'react'
 
+const Transactionhistory = () => {
+    const data = useSelector(state => state.tradingrecord.traderecord)
+    let list = []
+    if (data !== undefined) {
+        let reverseitem = data.map(item => item).reverse()
+        list = reverseitem.map((v) => {
+            return (
+                <tr key={v.pk}>
+                    <td>{v.ordertime}</td>
+                    <td>{v.ordertype}</td>
+                    <td>{v.price}</td>
+                    <td>{v.qty}</td>
+                    <td>{v.price * v.qty}</td>
+                </tr>
+            )
+        })
+    }
 
-
-const Transactionhistory = ()=>{
-    const [records,setRecords] = useState();
-    const data = useSelector(state=>state.tradingrecord.traderecord)
-    // const test = () => {    
-    //     if(data==undefined){
-    //         return setRecords(data)
-            
-    //     }else{
-    //         const list = () => {
-    //             let recorditem = data.map((v)=>{
-    //                 return(
-    //                     <tr key={v.pk}>
-    //                         <td>{v.ordertime}</td>
-    //                         <td>{v.ordertype}</td>
-    //                         <td>{v.price}</td>
-    //                         <td>{v.qty}</td>
-    //                         <td>{v.price * v.qty}</td>
-    //                     </tr>
-    //                 )
-    //             })
-    //             // console.log(recorditem,'recorditemmmmmmmmmmmmmmmmmmmmmmmmm')
-    //             console.log('나오나')
-    //             const list
-    //         }
-    //         return list
-    //     }
-    // }
-   
-    return(
+    return (
         <>
             <TransactionWrap>
                 <table>
@@ -47,7 +34,7 @@ const Transactionhistory = ()=>{
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {test} */}
+                        {list}
                     </tbody>
                 </table>
             </TransactionWrap>

@@ -2,10 +2,8 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Styled from 'styled-components'
 import Navigation from '../Layouts/Navigation'
-
 const Mypage = () => {
-  const Dispatch = useDispatch()
-  const 
+  const dispatch = useDispatch()
     return ( 
         <>
         <Navigation/>

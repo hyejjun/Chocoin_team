@@ -42,32 +42,29 @@ let join_post = (req, res) => {
     res.send('join');
 }
 
-<<<<<<< HEAD
-=======
-let login_get = (req, res) => {
-    res.render('로그인 창에 들어왔을 때')
+// let login_get = (req, res) => {
+//     res.render('로그인 창에 들어왔을 때')
 
-}
+// }
 
-let login_post = (req, res) => {
-    let query = `insert into usertable (userid,userpw) values('id','pw')`
-    send_data(req, res, query)
-}
+// let login_post = (req, res) => {
+//     let query = `insert into usertable (userid,userpw) values('id','pw')`
+//     send_data(req, res, query)
+// }
 
-let mypage_get = (req, res) => {
-    let query = `select * from assetrecord where userid = ${userid}`
-    get_data(req, res, query)
+// let mypage_get = (req, res) => {
+//     let query = `select * from assetrecord where userid = ${userid}`
+//     get_data(req, res, query)
 
-}
+// }
 
-let mypage_post = (req, res) => {
-    let{input,output,totalasset} = req.body
-    console.log(req.body)
-    let query = `insert into assetrecord(pk,userid,input,output,totalasset) values(10,'userid',${input},${output},${totalasset})`
-    send_data(req, res, query)
-}
+// let mypage_post = (req, res) => {
+//     let{input,output,totalasset} = req.body
+//     console.log(req.body)
+//     let query = `insert into assetrecord(pk,userid,input,output,totalasset) values(10,'userid',${input},${output},${totalasset})`
+//     send_data(req, res, query)
+// }
 
->>>>>>> eb0e94519f343a2008771b706f43ca30654c6379
 let id_check = (req, res) => {
     let userid = req.body.data;
     pool.getConnection((err, connection) => {

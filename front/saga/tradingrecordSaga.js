@@ -7,7 +7,6 @@ function* getTradingRecord(){
     const result = yield call(axios.get,`${url}/coin/info`)
     const {data} = result
     if(data.msg==="suc"){
-        console.log('suc')
         yield put({
             type:'GET_TRADINGRECORD_SUCCESS',
             data,
@@ -24,8 +23,32 @@ function* reqTradingRecord(){
     yield takeLatest('GET_TRADINGRECORD_REQUEST',getTradingRecord)
 }
 
+
+/* get OrderList */
+
+function* getOrderList(){
+    const result = yield call(axios.get,`${url}/coin/tradingview`)
+    const {data} = result
+    if(data.msg==="suc"){
+        yield put({
+            type:'GET_ORDERLIST_SUCCESS',
+            data:data.results,
+        })
+    }else{
+        yield put({
+            type:'GET_ORDERLIST_ERROR',
+            msg:data.msg
+        })
+    }
+}
+
+function* reqOrderList(){
+    yield takeLatest('GET_ORDERLIST_REQUEST',getOrderList)
+}
+
 export default function* writeSaga(){
     yield all([
         fork(reqTradingRecord),
+        fork(reqOrderList),
     ])
 }
