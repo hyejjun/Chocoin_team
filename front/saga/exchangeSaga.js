@@ -6,7 +6,7 @@ function exchangeAPI(data) {
     return axios.post(`${url}/coin/order`,data)
 }
 
-function* exchange(action) { 
+function* exchange(action) {
     const result = yield call(exchangeAPI, action.data)
 
     
