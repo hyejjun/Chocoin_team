@@ -83,7 +83,7 @@ let login_post = (req, res) => {
             } else {
                 let ctoken = token(userpw,userid);
                 result = {
-                    result:'LoginSuc',
+                    result:'OK',
                     msg:'로그인 성공'
                 }
                 let test = {results, ctoken, result};
@@ -98,6 +98,7 @@ let login_post = (req, res) => {
 
 let logout = (req,res)=>{
     res.clearCookie('AccessToken');
+    res.setHeader('Set-Cookie', `token=; path=/; expires=-1`);
     res.send('logout');
 }
 

@@ -50,7 +50,6 @@ function* login(action){
         yield put({
             type:'USER_LOGIN_SUCCESS',
             data:'OK',
-            // user_info:data.results
         })
     }else{
         yield put({
@@ -61,21 +60,18 @@ function* login(action){
 }
 
 function cookieAPI(){
-    return axios.get(`http://localhost:3000`,{withCredentials:true});
+    return axios.get(`${url}`,{withCredentials:true});
 }
 function* cookie_check(action){
     let result = yield call(cookieAPI,action);
     let {data} = result;
-    console.log(data.cookie,"datadatadata")
     
     if(data.cookie === 'success'){
-        console.log('cookie success')
         yield put({
             type:'USER_COOKIE_SUCCESS',
             data:data.cookie,
         })
     }else{
-        console.log('cookie fail')
         yield put({
             type:'USER_COOKIE_ERROR',
             data:data.cookie,
@@ -84,7 +80,7 @@ function* cookie_check(action){
 }
 
 function logoutAPI(){
-    return axios.get(`http://localhost:3500/user/logout`,{withCrendentials:true})
+    return axios.get(`${url}/user/logout`);
 }
 function* logout(){
     let result = yield call(logoutAPI);

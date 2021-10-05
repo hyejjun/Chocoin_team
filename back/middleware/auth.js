@@ -4,7 +4,6 @@ const crypto = require('crypto');
 module.exports = (req, res, next) => {
     let { AccessToken } = req.cookies;
     if (AccessToken == undefined) {
-        console.log('undefined')
         res.json({ cookie:'Fail' });
         return 0;
     }

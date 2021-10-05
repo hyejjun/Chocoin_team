@@ -1,28 +1,19 @@
 import Link from 'next/link'
 import Styled from 'styled-components'
-import { useDispatch } from 'react-redux'
+import { useDispatch,useSelector } from 'react-redux'
 import { useEffect } from 'react'
 // import { logout } from '../../back/middleware/auth'
 import { user_logout } from '../reducers/user'
 import Logout from '../pages/user/logout'
+import Router from "next/router";
 
 const Navigation = () => {
 
     const dispatch = useDispatch();
-
-    // const handleLogout = () => {
-    //     dispatch({ type:'USER_LOGOUT' })
-    //     logout();
-    // }
-
-    useEffect(()=>{
-        window.addEventListener('storage',(e)=>{
-            if(e.key === 'logout'){
-                console.log('로그아웃 감지');
-                dispatch(user_logout())
-            }
-        })
-    },[]);
+    
+    const handleLogout = () => {
+        dispatch(user_logout());
+    }
 
     return (
         <>
@@ -32,7 +23,7 @@ const Navigation = () => {
                 <li><Link href='/user/join'><a>회원가입</a></Link></li>
                 <li><Link href='/mypage'><a>내 정보</a></Link></li>
                 <li><Link href='/coininfo'><a>코인 정보</a></Link></li>
-                <li className="logout_btn"><Logout/></li>
+                <li className="logout_btn" onClick={handleLogout}><Logout/></li>
             </Gnb>
         </>
     )
