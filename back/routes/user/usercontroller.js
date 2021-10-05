@@ -94,6 +94,11 @@ let login_post = (req, res) => {
             connection.release();
         })
     })
+};
+
+let logout = (req,res)=>{
+    res.clearCookit('AccessToken');
+    res.send('logout');
 }
 
 let mypage_get = (req, res) => {
@@ -116,5 +121,6 @@ module.exports = {
     join_post,
     login_post,
     mypage_post,
-    id_check
+    id_check,
+    logout
 }

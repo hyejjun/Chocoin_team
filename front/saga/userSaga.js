@@ -80,11 +80,20 @@ function* cookie_check(action){
     }
 }
 
+function logoutAPI(){
+    return axios.get(`http://localhost:3000/user/logout`,{withCrendentials:true})
+}
+function* logout(){
+    console.log('logout Saga')
+    let result = yield call(logoutAPI);
+}
+
 function* watchUser(){
     yield takeLatest('USER_JOIN_REQUEST',join);
     yield takeLatest('USER_ID_CHECK',id_check);
     yield takeLatest('USER_LOGIN_REQUEST',login);
     yield takeLatest('USER_COOKIE_CHECK',cookie_check);
+    yield takeLatest('USER_LOGOUT',logout);
 }
 
 export default function* userSaga(){
