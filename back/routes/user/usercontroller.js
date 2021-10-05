@@ -97,7 +97,7 @@ let login_post = (req, res) => {
 };
 
 let logout = (req,res)=>{
-    res.clearCookit('AccessToken');
+    res.clearCookie('AccessToken');
     res.send('logout');
 }
 
