@@ -29,19 +29,23 @@ export const MypageGet_ERROR = () => {
 
 
 const reducer = (state = initalState, action) => {
+    console.log(action);
     switch (action.type) {
         case MYPAGE_GET_REQUEST:
+            console.log('first rendering')
             return {
                 ...state,
                 loading : true,
-                orderData: action.data
+            
             }
         case MYPAGE_GET_SUCCESS:
             return {
                 ...state,
+                mypaged: action.data,
                 loading: false,
             }
         case MYPAGE_GET_ERROR:
+            console.log('err')
             return {
                 ...state,
                 loading: false,
