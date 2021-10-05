@@ -1,8 +1,8 @@
 import Styled from "styled-components"
-import { useState } from "react"
+import { useState,componentDidMount } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { ExchangeInsert_REQUEST } from "../reducers/exchange"
-import { getTradingRecord_REQUEST } from '../reducers/tradingrecord'
+import { getTradingRecord_REQUEST,getOrderList_REQUEST } from '../reducers/tradingrecord'
 
 
 const TradeForm = (props, state) => {
@@ -29,12 +29,15 @@ const TradeForm = (props, state) => {
             type: props.type
         }
         dispatch(ExchangeInsert_REQUEST(data))
+        dispatch(getTradingRecord_REQUEST())
+        dispatch(getOrderList_REQUEST())
 
         setPrice(0)
         setQnt(0)
     }
-
     dispatch(getTradingRecord_REQUEST())
+    
+    
     return (
 
         <>

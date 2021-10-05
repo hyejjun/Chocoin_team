@@ -20,5 +20,3 @@ ALTER TABLE transactions add FOREIGN KEY (a_orderid) REFERENCES ordertable(pk);
     -- 즉 usertable -> assetrecord -> cointable
     --    usertable -> ordertable -> transactions 
     -- 위와 같은 순으로 data가 들어가야 한다.
-
--
