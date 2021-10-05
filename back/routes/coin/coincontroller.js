@@ -62,7 +62,7 @@ let tradingview = async (req, res) => {
 let get_orderdata = (req, res) => {
     let { price, qnt, type } = req.body
 
-    let insetdata_query = `insert into ordertable (pk,userid,price,qty,ordertype,active,coinname) values(49,'web11',${price},${qnt},"${type}",true,"chocoin")`
+    let insetdata_query = `insert into ordertable (pk,userid,price,qty,ordertype,active,coinname) values(30,'web11',${price},${qnt},"${type}",true,"chocoin")`
     pool.getConnection((err, connection) => {
         if (err) throw err;
         connection.query(insetdata_query, function (error, results, fields) {
@@ -92,8 +92,14 @@ let get_orderdata = (req, res) => {
             const orderlist = [...results];
             console.log("ddddddddddddd", orderlist);
 
-            let i=0;
-            while (i == orderlist.length - 1) {
+            let i = 0;
+            while (true) {
+                if (orderlist.length == 0) break;
+                if ( orderlist.length == i) {
+                    console.log(' 검사 끝 ');
+                    break;
+                }
+                console.log("첫번째 i====", i);
                 if (orderlist[i].qty >= qnt) {
                     let left = orderlist[i].qty - qnt
 
@@ -134,8 +140,11 @@ let get_orderdata = (req, res) => {
                         })
                     })
                     qnt = qnt - orderlist[i].qty;
-                    i ++;
-                }
+                    i++;
+                    console.log("두번째 i====", i);
+                } 
+                
+
             }
         })
     })
