@@ -1,8 +1,10 @@
 import Styled from "styled-components"
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
+import { getTradingRecord_REQUEST } from '../reducers/tradingrecord'
 
 const Transactionhistory = () => {
+
     const data = useSelector(state => state.tradingrecord.traderecord)
     let list = []
     if (data !== undefined) {

@@ -52,15 +52,15 @@ let coin_info = (req,res) => {
     get_data(req,res,query)
 }
 
-let tradingview = (req,res)=>{
+let tradingview = async (req,res)=>{
     let query = `select price,ordertype,sum(qty) as sum,ordertime from ordertable where active=0 group by price,ordertype`
-    get_data(req,res,query)
+    await get_data(req,res,query)
 }
 
 let get_orderdata = (req,res) => {
     let {price,qnt,type} = req.body 
     console.log(req.body);
-    let query =  `insert into ordertable (pk,userid,price,qty,ordertype,active,coinname) values(13,'userid',${price},${qnt},"${type}",true,"chocoin")`
+    let query =  `insert into ordertable (pk,userid,price,qty,ordertype,active,coinname) values(28,'userid',${price},${qnt},"${type}",true,"chocoin")`
     // let query =  `insert into ordertable (pk,userid,price,qty,ordertype) values(5,'userid',1,1,1)`
     send_data(req,res,query) 
 }

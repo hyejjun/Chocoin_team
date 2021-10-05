@@ -1,7 +1,8 @@
 export const initialState = {
     loading: false,
     isLogin: false,
-    Id_check: ''
+    Id_check: '',
+    token:null,
 }
 
 const firstState = "firstState"
@@ -18,24 +19,38 @@ const USER_LOGIN_REQUEST = "USER_LOGIN_REQUEST";
 const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
 const USER_LOGIN_ERROR = "USER_LOGIN_ERROR";
 
+const USER_LOGOUT = "USER_LOGOUT";
+
+const USER_COOKIE_CHECK = "USER_COOKIE_CHECK";
+const USER_COOKIE_SUCCESS = "USER_COOKIE_SUCCESS";
+const USER_COOKIE_ERROR = "USER_COOKIE_ERROR";
+
 export const user_join_request = data => {
     return {
         type: USER_JOIN_REQUEST,
         data
     }
 }
-
 export const user_id_check = data => {
     return {
         type: USER_ID_CHECK,
         data
     }
 }
-
 export const user_login_request = data => {
     return{
         type: USER_LOGIN_REQUEST,
         data,
+    }
+}
+export const user_logout = () => {
+    return{
+        type:USER_LOGOUT,
+    }
+}
+export const user_cookie_check = () => {
+    return {
+        type:USER_COOKIE_CHECK
     }
 }
 
@@ -97,6 +112,27 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading:false,
                 data:action.data,
+            }
+        case USER_LOGOUT:
+            return{
+                ...state,
+                isLogin:false,
+                data:'logout',
+            }
+        case USER_COOKIE_CHECK:
+            return{
+                ...state,
+                loading:true,
+            }
+        case USER_COOKIE_SUCCESS:
+            return{
+                ...state,
+                loading:false,
+            }
+        case USER_COOKIE_ERROR:
+            return{
+                ...state,
+                loading:false,
             }
         default:
             return state

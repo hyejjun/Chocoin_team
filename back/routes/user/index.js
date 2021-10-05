@@ -8,6 +8,7 @@ router.post('/id_check',userController.id_check);
 
 router.get('/login',userController.login_get);
 router.post('/login',userController.login_post);
+router.post('/logout',userController.logout);
 
 router.get('/mypage',userController.mypage_get);
 router.post('/mypage',userController.mypage_post);

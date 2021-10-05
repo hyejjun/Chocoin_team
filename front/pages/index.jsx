@@ -1,26 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import RootProvider from '../Providers/rootProvider'
-import Login_form from '../components/user/login_form'
 import Orderbook from '../components/Orderbook'
 import Trade from '../components/Trade'
 import Styled from 'styled-components'
 import Transactionhistory from '../components/Transactionhistory'
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import Login from './user/login'
+import { useDispatch,useSelector } from 'react-redux'
+import { user_cookie_check } from '../reducers/user'
 
 const index = () => {
 
-    const data = useSelector(state => state.user);
+    const dispatch = useDispatch();
 
     useEffect(()=>{
-        if(data.data !== undefined){
-            if(data.data === 'LoginSuc'){
-                Router.push('/')
-            }else if(data.data === '아이디와 비밀번호를 확인해주세요'){
-                alert(data.data)
-            }
-        }
-    },[data])
+        dispatch(user_cookie_check());
+    },[]);
 
     return (
         <>
@@ -33,7 +27,7 @@ const index = () => {
                         </OrderInner>
                     </OrderboxSection>
                     <Transactionhistory />
-                    {data.data === undefined ? <Login_form/> : ''}
+                    <Login/>
                 </OrderboxWrpa>
             </RootProvider>
         </>
