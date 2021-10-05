@@ -1,7 +1,54 @@
 import Styled from "styled-components"
 import Orderlist from "./OrderList"
+import Orderlist2 from "./OrderList2"
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from "react"
+import { getOrderList_REQUEST } from "../reducers/tradingrecord"
 
 const Orderbook = () => {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getOrderList_REQUEST())
+    }, [])
+
+    const data = useSelector(state => state.tradingrecord.orderList)
+
+    let list = []
+    if (data !== undefined) {
+        console.log(data);
+        let reverseitem = data.map(item => item).reverse()
+        list = reverseitem.map((v, i) => {
+            return (
+                <>
+                    {
+                        v.ordertype === "BUY"
+                            ?
+                            <>
+                                <div key={i}>
+                                    <p>
+                                        <span>{v.sum}</span>
+                                    </p>
+                                    <p>
+                                        <span>{v.price}</span>
+                                    </p>
+                                    <p></p>
+                                </div>
+                            </>
+                            :
+                            <div key={i}>
+                                <p></p>
+                                <p>
+                                    <span>{v.price}</span>
+                                </p>
+                                <p>
+                                    <span>{v.sum}</span>
+                                </p>
+                            </div>
+                    }
+                </>
+            )
+        })
+    }
     return (
         <>
             <OrderbookWrap>
@@ -17,8 +64,7 @@ const Orderbook = () => {
                     </Orderbookdiv>
                 </div>
                 <Orderbody>
-                    <Orderlist />
-                    <Orderlist />
+                    <Orderlist list={list} />
                 </Orderbody>
             </OrderbookWrap>
         </>

@@ -8,6 +8,7 @@ router.get('/info',coinController.coin_info)
 // router.get('/order',coinController.get_orderdata)
 
 router.post('/order',coinController.get_orderdata)
+router.get('/tradingview',coinController.tradingview)
 
 
 

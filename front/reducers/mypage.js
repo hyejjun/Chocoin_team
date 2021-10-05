@@ -29,16 +29,16 @@ export const MypageGet_ERROR = () => {
 
 
 const reducer = (state = initalState, action) => {
+    console.log(action);
     switch (action.type) {
         case MYPAGE_GET_REQUEST:
-            console.log('dsaa')
+            console.log('first rendering')
             return {
                 ...state,
                 loading : true,
             
             }
         case MYPAGE_GET_SUCCESS:
-            console.log(action.data,'ㅔㅈ발')
             return {
                 ...state,
                 mypaged: action.data,

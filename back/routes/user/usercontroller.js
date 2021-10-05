@@ -42,28 +42,28 @@ let join_post = (req, res) => {
     res.send('join');
 }
 
-let login_get = (req, res) => {
-    res.render('로그인 창에 들어왔을 때')
+// let login_get = (req, res) => {
+//     res.render('로그인 창에 들어왔을 때')
 
-}
+// }
 
-let login_post = (req, res) => {
-    let query = `insert into usertable (userid,userpw) values('id','pw')`
-    send_data(req, res, query)
-}
+// let login_post = (req, res) => {
+//     let query = `insert into usertable (userid,userpw) values('id','pw')`
+//     send_data(req, res, query)
+// }
 
-let mypage_get = (req, res) => {
-    let query = `select * from assetrecord where userid = ${userid}`
-    send_data(req, res, query)
+// let mypage_get = (req, res) => {
+//     let query = `select * from assetrecord where userid = ${userid}`
+//     get_data(req, res, query)
 
-}
+// }
 
-let mypage_post = (req, res) => {
-    let{input,output,totalasset} = req.body
-    console.log(req.body)
-    let query = `insert into assetrecord(pk,userid,input,output,totalasset) values(10,'userid',${input},${output},${totalasset})`
-    send_data(req, res, query)
-}
+// let mypage_post = (req, res) => {
+//     let{input,output,totalasset} = req.body
+//     console.log(req.body)
+//     let query = `insert into assetrecord(pk,userid,input,output,totalasset) values(10,'userid',${input},${output},${totalasset})`
+//     send_data(req, res, query)
+// }
 
 let id_check = (req, res) => {
     let userid = req.body.data;
