@@ -1,9 +1,11 @@
-const request = require('request')
-require('dotenv').config()
+const request = require('request');
+require('dotenv').config();
 const mysql = require('mysql');
-const {get_data,send_data} = require('../../db.js');
+const {get_data,send_data,trade} = require('../../db.js');
+const config = require('../../db_config.json');
+const pool = mysql.createPool(config);
 
-const headers = {"Content-type":"application/json"}
+const headers = {"Content-type":"application/json"};
 const USER = process.env.RPC_USER;
 const PASS = process.env.RPC_PASSWORD;
 const RPCPORT = process.env.RPC_PORT;
@@ -48,30 +50,34 @@ function createbody(method,params=[]){
 
 let coin_info = (req,res) => { 
     //let query = `select * from transactions order by contracttime desc`;
-    let query = `select * from ordertable where active=1`
-    get_data(req,res,query)
+    let query = `select * from ordertable where active=1`;
+    get_data(req,res,query);
 }
 
 let tradingview = async (req,res)=>{
-    let query = `select price,ordertype,sum(qty) as sum,ordertime from ordertable where active=0 group by price,ordertype`
-    await get_data(req,res,query)
+    let query = `select price,ordertype,sum(qty) as sum,ordertime from ordertable where active=0 group by price,ordertype`;
+    await get_data(req,res,query);
 }
 
-let get_orderdata = (req,res) => {
+let get_orderdata = async (req,res) => {
     let {price,qnt,type} = req.body 
     console.log(req.body);
-    let query =  `insert into ordertable (pk,userid,price,qty,ordertype,active,coinname) values(28,'userid',${price},${qnt},"${type}",true,"chocoin")`
+    let query =  `insert into ordertable (pk,userid,price,qty,ordertype,active,coinname) values(36,'userid',${price},${qnt},"${type}",true,"chocoin")`
     // let query =  `insert into ordertable (pk,userid,price,qty,ordertype) values(5,'userid',1,1,1)`
-    send_data(req,res,query) 
+    await trade(req,type,qnt,price)
+    await send_data(req,res,query)
+
 }
 
 
-let trade = (req,res)=>{
+let trade2 = (req,res)=>{
     // let query = `select price,qty,ordertype from ordertable where active=1 order by ordertime desc`
     // 여기서 거래 하기 . price 와 qty 일치시.. 거래성사 후 active 1로 바꾸고 transaction 테이블에 올리기
-    let query = `select price,ordertype,sum(qty) as sum,ordertime from ordertable where active=0 group by price,ordertype`
-    
+    let query = `select price,ordertype,sum(qty) as sum,ordertime from ordertable where active=0 group by price,ordertype`   
 }
+
+
+
 
 
 module.exports = {
