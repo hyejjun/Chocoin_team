@@ -93,7 +93,8 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                Id_check: action.data
+                Id_check: action.data,
+                // IsLogin:undefined,
             }
         case USER_LOGIN_REQUEST:
             return{
@@ -116,8 +117,8 @@ const reducer = (state = initialState, action) => {
         case USER_LOGOUT:
             return{
                 ...state,
-                isLogin:false,
                 data:'logout',
+                IsLogin:false,
             }
         case USER_COOKIE_CHECK:
             return{
