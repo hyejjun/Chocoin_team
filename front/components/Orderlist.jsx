@@ -4,9 +4,7 @@ const Orderlist = (props) => {
     return (
         <>
             <OrderList>
-                {
-                    props.list
-                }
+                { props.list }
             </OrderList>
         </>
     )

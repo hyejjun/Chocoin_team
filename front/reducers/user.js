@@ -1,7 +1,8 @@
 export const initialState = {
     loading: false,
     isLogin: false,
-    Id_check: ''
+    Id_check: '',
+    token:null,
 }
 
 const firstState = "firstState"
@@ -17,6 +18,8 @@ const USER_ID_ERROR = "USER_ID_ERROR";
 const USER_LOGIN_REQUEST = "USER_LOGIN_REQUEST";
 const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
 const USER_LOGIN_ERROR = "USER_LOGIN_ERROR";
+
+const USER_LOGOUT = "USER_LOGOUT";
 
 const USER_COOKIE_CHECK = "USER_COOKIE_CHECK";
 const USER_COOKIE_SUCCESS = "USER_COOKIE_SUCCESS";
@@ -38,6 +41,11 @@ export const user_login_request = data => {
     return{
         type: USER_LOGIN_REQUEST,
         data,
+    }
+}
+export const user_logout = () => {
+    return{
+        type:USER_LOGOUT,
     }
 }
 export const user_cookie_check = () => {
@@ -85,7 +93,8 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                Id_check: action.data
+                Id_check: action.data,
+                // IsLogin:undefined,
             }
         case USER_LOGIN_REQUEST:
             return{
@@ -104,6 +113,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading:false,
                 data:action.data,
+            }
+        case USER_LOGOUT:
+            return{
+                ...state,
+                data:'logout',
+                IsLogin:false,
             }
         case USER_COOKIE_CHECK:
             return{

@@ -1,39 +1,43 @@
 import {all,fork,takeLatest,call,put, take} from 'redux-saga/effects'
 import axios from 'axios'
-<<<<<<< HEAD
-import { url } from './url'
-=======
 import {url} from './url'
 
->>>>>>> c8742d96aacfb76bbd91720b4f03cb1235ef78fc
-function MyPageAPI(data) {
-    return axios.get(`${url}/user/mypage`,data)
+function MyPageAPI() {
+    return axios.post(`${url}/user/mypage`,{userid : 'web11'})
+}
+
+function MyPageAPI2() {
+    return axios.post(`${url}/user/mypage2`,{userid : 'web11'})
 }
 
 function* MyPage(action) { 
     const result = yield call(MyPageAPI, action.data)
+    const result2 = yield call(MyPageAPI2, action.data2)
     
     const { data } = result
-    console.log(data);
+    const data2 = result2.data
+    console.log(data2);
 
-    // if (data.result === 'OK') {
-    //     yield put({
-    //         type: 'MYPAGE_GET_SUCCESS',
-    //         data: data.msg
-    //     })
-    // } else {
-    //     yield put({
-    //         type: 'MYPAGE_GET_ERROR',
-    //         data: data.msg
-    //     })
-    // }
+    if (data.msg && data2.msg === 'suc') {
+        yield put({
+            type: 'MYPAGE_GET_SUCCESS',
+            data: data.results,
+            data2 : data2.results
+        })
+    } else {
+        yield put({
+            type: 'MYPAGE_GET_ERROR',
+            data: data.msg,
+            data2 : data2.msg
+        })
+    }
 }
 
 function* reqMyPage() {
     yield takeLatest('MYPAGE_GET_REQUEST', MyPage)    
 }
 
-export default function* MyPage(){
+export default function* MyPageSaga(){
     yield all([
         fork(reqMyPage),
     ])
