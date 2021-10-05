@@ -102,9 +102,12 @@ let logout = (req,res)=>{
 }
 
 let mypage_get = (req, res) => {
-    let query = `select * from assetrecord where userid = ${userid}`
-    get_data(req, res, query)
+    // let {userid} = req.body
 
+    // let query = `select * from assetrecord where userid = ${userid}`
+    let query = `select * from assetrecord where userid = 'web11'`
+    get_data(req, res, query)
+    // res.send('dddddd')
 }
 
 let mypage_post = (req, res) => {
