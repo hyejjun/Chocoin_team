@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { user_id_check, user_join_request } from "../../reducers/user";
 import { JoinForm } from './join_css'
 import useInput from "../../hooks/useInput";
+import Router from "next/router";
 
 
 const Join_form = () => {
@@ -41,7 +42,8 @@ const Join_form = () => {
                 setPasswordError(false)
                 if (data.Id_check == false) {
                     dispatch(user_join_request(user_data));
-                    alert('회원가입이 완료되었습니다.')
+                    alert('회원가입이 완료되었습니다.');
+                    Router.push('/');
                 } else {
                     alert('사용 불가능한 아이디 입니다.');
                 }

@@ -1,15 +1,26 @@
 import Link from 'next/link'
 import Styled from 'styled-components'
+import { useDispatch,useSelector } from 'react-redux'
+import { user_logout } from '../reducers/user'
+import Logout from '../pages/user/logout'
 
 const Navigation = () => {
+
+    const dispatch = useDispatch();
+    
+    const handleLogout = () => {
+        dispatch(user_logout());
+    }
+
     return (
         <>
             <Gnb>
                 <li className="logo"><Link href='/'><a>chocoin</a></Link></li>
                 <li><Link href='/'><a>거래소</a></Link></li>
-                <li><Link href='/user/join'><a>회원가입</a></Link></li>
+                {/* <li><Link href='/user/join'><a>회원가입</a></Link></li> */}
                 <li><Link href='/mypage'><a>내 정보</a></Link></li>
                 <li><Link href='/coininfo'><a>코인 정보</a></Link></li>
+                <li className="logout_btn" onClick={handleLogout}><Logout/></li>
             </Gnb>
         </>
     )

@@ -19,7 +19,7 @@ app.use(expressSession({
         secure:false,
     },
     name:'token',
-}))
+}));
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -27,8 +27,7 @@ app.use(bodyParser.json());
 app.use(cors({
 	origin: true, 
     credentials: true,  
-}))
-
+}));
 
 app.use(morgan('dev'));
 

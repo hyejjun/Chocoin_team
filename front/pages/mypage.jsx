@@ -1,9 +1,33 @@
-import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Styled from 'styled-components'
 import Navigation from '../Layouts/Navigation'
+import { useEffect } from 'react'
+import MypageGet_REQUEST from '../reducers/mypage'
+
 const Mypage = () => {
   const dispatch = useDispatch()
+  useEffect(()=>{
+      dispatch(MypageGet_REQUEST())
+  },[])
+
+  const data = useSelector(state => state.mypaged)
+
+  let list = []
+  if(data !== undefined){
+      console.log(data);
+      let item = data
+      list = item.map((v,i)=>{
+          return(
+              <>
+                <div key={i}>
+
+                </div>
+             </>
+          )
+      })
+  }
+
+ 
     return ( 
         <>
         <Navigation/>
@@ -40,7 +64,7 @@ const Mypage = () => {
                               </tr> */}
                           </thead>
                           <tbody>
-                              {/* {tmp} */}
+                            
                               {/* <tr>
                                   <td>2021-09-03</td>
                                   <td>chocoin</td>
@@ -84,6 +108,7 @@ const Mypagetop = Styled.div`
     margin-bottom: 1rem;
     margin: 0;
     font-size: 36px;
+    
 `
 
 const MypageNav = Styled.div`
