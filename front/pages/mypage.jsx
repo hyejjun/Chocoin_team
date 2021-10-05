@@ -8,42 +8,58 @@ const Mypage = () => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(MypageGet_REQUEST())
+        // 여기서 userid 같이 보내줘야함
     }, [])
 
-  const page = useSelector(state => state.mypage.pagelist)
-  let list = []
-  if(page !== undefined){
-      let reverseitem = page.map(item => item).reverse()
-      list = reverseitem.map((v)=>{
-          return(     
-                <tr key={v.pk}>
+    const page = useSelector(state => state.mypage.pagelist)
+    const coin = useSelector(state => state.mypage.coininfo)
+
+    let list = []
+    if (page !== undefined) {
+        let reverseitem = page.map(item => item).reverse()
+        list = reverseitem.map((v,i) => {
+            return (
+                <tr key={i}>
                     <td>{v.input}</td>
                     <td>{v.output}</td>
                     <td>{v.input * v.output}</td>
                     <td>{v.regdate}</td>
-                </tr>        
-          )
-      })
-  }
+                </tr>
+            )
+        })
+    }
 
- 
-    return ( 
+    let list2 = []
+    if (coin !== undefined) {
+        let reverseitem2 = coin.map(item => item).reverse()
+        list2 = reverseitem2.map((v,i) => {
+            return (
+                <ul key={i}>
+                    <li>{v.coinname}</li>
+                    <li>{v.qty}</li>
+                </ul>
+            )
+        })
+    }
+
+
+    return (
         <>
-        <Navigation/>
+            <Navigation />
 
             <Mypageatall>
                 <div>
-                    <Mypagetop>
+                    {/* <Mypagetop>
                     <div>
                         마이페이지
                     </div>
-                    </Mypagetop>
-                    <MypageNav>
+                    </Mypagetop> */}
+                    {/* <MypageNav>
                     <div>
                             <div id="KRW">보유 KRW</div>
                             <div id="ALL">총 보유자산</div>
                     </div>
-                    </MypageNav>
+                    </MypageNav> */}
                     <Myhistory>
                         <table>
                             <thead>
@@ -58,26 +74,21 @@ const Mypage = () => {
                                 {list}
                             </tbody>
                         </table>
+
+                        <div>
+                        {list2}
+                        </div>
+                        
                     </Myhistory>
                 </div>
-            
+
             </Mypageatall>
         </>
-      )
+    )
 }
 
 export default Mypage
 
-
-// css 작성법
-/*
-
-const Example(변수명 앞 글자 대문자) = Styled.div`
-    width:100px;    // 세미콜론 ; 꼭 써주기
-    height:50px;
-
-`
-*/
 
 const Mypageatall = Styled.div`
     width:100%;
@@ -112,22 +123,27 @@ const MypageNav = Styled.div`
 `
 
 const Myhistory = Styled.div`
-       box-sizing:border-box;
-        & table {
-            width:100%;
-            background-color: #f9fafc;
-            color: #666;
-        }
-
-        & > table > thead > tr > th, & > table > tbody > tr > td{
-            height:25px;
-            font-size:15px;
-            vertical-align:center;
-            background-color:hsl(205, 77%, 27%);
-            color:white;
-            line-height:30px;
-        }
-        & > table > tbody > tr >td{
-        text-align:center;
+    box-sizing:border-box;
+    & table {
+       width:70%;
+       background-color: #f9fafc;
+       color: #666;
     }
+    & > table > thead > tr > th, & > table > tbody > tr > td{
+        width : 25%;
+        height:25px;
+        font-size:15px;
+        vertical-align:center;
+        background-color:hsl(205deg 48% 20%);
+        color:white;
+        line-height:30px;
+    }
+    & > table > tbody > tr >td{
+       text-align:center;
+       background : none;
+       color : hsl(205deg 48% 20%);
+    }
+
+    
+
 `
