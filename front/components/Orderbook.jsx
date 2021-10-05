@@ -1,6 +1,5 @@
 import Styled from "styled-components"
 import Orderlist from "./OrderList"
-import Orderlist2 from "./OrderList2"
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from "react"
 import { getOrderList_REQUEST } from "../reducers/tradingrecord"
@@ -15,27 +14,24 @@ const Orderbook = () => {
 
     let list = []
     if (data !== undefined) {
-        console.log(data);
         let reverseitem = data.map(item => item).reverse()
         list = reverseitem.map((v, i) => {
             return (
-                <>
+                <div key={i}>
                     {
                         v.ordertype === "BUY"
                             ?
                             <>
-                                <div key={i}>
-                                    <p>
-                                        <span>{v.sum}</span>
-                                    </p>
-                                    <p>
-                                        <span>{v.price}</span>
-                                    </p>
-                                    <p></p>
-                                </div>
+                                <p>
+                                    <span>{v.sum}</span>
+                                </p>
+                                <p>
+                                    <span>{v.price}</span>
+                                </p>
+                                <p></p>
                             </>
                             :
-                            <div key={i}>
+                            <>
                                 <p></p>
                                 <p>
                                     <span>{v.price}</span>
@@ -43,12 +39,13 @@ const Orderbook = () => {
                                 <p>
                                     <span>{v.sum}</span>
                                 </p>
-                            </div>
+                            </>
                     }
-                </>
+                </div>
             )
         })
     }
+
     return (
         <>
             <OrderbookWrap>

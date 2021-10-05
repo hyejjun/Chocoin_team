@@ -6,16 +6,18 @@ export const MYPAGE_GET_SUCCESS = "MYPAGE_GET_SUCCESS"
 export const MYPAGE_GET_ERROR = "MYPAGE_GET_ERROR"
 
 
-export const MypageGet_REQUEST = () => {
+export const MypageGet_REQUEST = (data) => {
     return {
         type: MYPAGE_GET_REQUEST,
+        data
     }
 }
 
-export const MypageGet_SUCCESS = (data) => {
+export const MypageGet_SUCCESS = (data,data2) => {
     return {
         type: MYPAGE_GET_SUCCESS,
-        data
+        data,
+        data2
     }
 }
 
@@ -34,10 +36,10 @@ const reducer = (state = initalState, action) => {
                 loading: true,
             }
         case MYPAGE_GET_SUCCESS:
-            console.log(action);
             return {
                 ...state,
-                pagelist: action.data,
+                pagelist : action.data,
+                coininfo : action.data2, 
                 loading : false,
             }
         case MYPAGE_GET_ERROR:
