@@ -10,11 +10,13 @@ import { END } from 'redux-saga'
 import wrapper from '../store/configureStore'
 import jwtId from '../../back/jwtId';
 import jwtPw from '../../back/jwtPw';
+import WebSocketWrap from './WebSocket';
 
 const index = () => {
 
     return (
         <>
+            <WebSocketWrap />
             <RootProvider>
                 <OrderboxWrpa>
                     <OrderboxSection>
@@ -56,7 +58,7 @@ const OrderInner = Styled.div`
 `
 
 export const getServerSideProps = wrapper.getServerSideProps(Store => async (req, res) => {
-    
+
     if (req.req.headers.cookie !== undefined) {
         let arr = req.req.headers.cookie.trim().split(';');
 
@@ -81,8 +83,8 @@ export const getServerSideProps = wrapper.getServerSideProps(Store => async (req
         }
         Store.dispatch(END)
         await Store.sagaTask.toPromise();
-    
-    }else{
+
+    } else {
         return;
     }
 
