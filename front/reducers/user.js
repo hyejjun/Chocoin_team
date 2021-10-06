@@ -1,8 +1,8 @@
 export const initialState = {
     loading: false,
-    isLogin: false,
+    IsLogin: false,
     Id_check: '',
-    token:null,
+    data:'',
 }
 
 const firstState = "firstState"
@@ -113,6 +113,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading:false,
                 data:action.data,
+                IsLogin:false,
             }
         case USER_LOGOUT:
             return{

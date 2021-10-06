@@ -1,10 +1,20 @@
-import React from 'react'
-import {HYDRATE} from 'next-redux-wrapper'
-import { combineReducers } from 'redux'
-import exchange from './exchange'
-import tradingrecord from './tradingrecord'
-import mypage from './mypage'
-import user from './user'
+import React from 'react';
+import {HYDRATE} from 'next-redux-wrapper';
+import { combineReducers } from 'redux';
+import exchange from './exchange';
+import tradingrecord from './tradingrecord';
+import mypage from './mypage';
+import user from './user';
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import axios from 'axios';
+
+const persistConfig = {
+    key: "root",
+    storage,
+    whitelist: ["user"]
+  };
+  
 
 const rootReducer = (state,action) => {
     switch(action.type){
@@ -19,4 +29,4 @@ const rootReducer = (state,action) => {
     }
 }
 
-export default rootReducer
+export default rootReducer;

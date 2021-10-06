@@ -11,7 +11,6 @@ function* exchange(action) {
 
     
     const { data } = result
-    console.log(data,'여기느느는ㄴ');
 
     // if (data.result === 'OK') {
     //     yield put({
