@@ -3,6 +3,7 @@ export const initialState = {
     IsLogin: false,
     Id_check: '',
     data:'',
+    userid:'',
 }
 
 const firstState = "firstState"
@@ -97,6 +98,7 @@ const reducer = (state = initialState, action) => {
                 // IsLogin:undefined,
             }
         case USER_LOGIN_REQUEST:
+            console.log(action.data)
             return{
                 ...state,
                 loading:true,
@@ -107,6 +109,7 @@ const reducer = (state = initialState, action) => {
                 IsLogin:true,
                 loading:false,
                 data:action.data,
+                userid:action.userid,
             }
         case USER_LOGIN_ERROR:
             return{
@@ -120,6 +123,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 data:'logout',
                 IsLogin:false,
+                userid:'',
             }
         case USER_COOKIE_CHECK:
             return{
