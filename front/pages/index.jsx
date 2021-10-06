@@ -9,6 +9,8 @@ import { useDispatch } from 'react-redux';
 import { user_cookie_check, user_login_request, user_logout } from '../reducers/user';
 import {END} from 'redux-saga'
 import wrapper from '../store/configureStore'
+import jwtId from '../../back/jwtId';
+import jwtPw from '../../back/jwtPw';
 
 const index = () => {
 
@@ -62,6 +64,7 @@ const OrderInner = Styled.div`
 
 export const getServerSideProps = wrapper.getServerSideProps( Store => async (req,res) => {
     let arr = req.req.headers.cookie.trim().split(';');
+
     let [result] = arr.map(v=>{
         let row = v.split("=")
         if(row[0].trim() == "AccessToken"){
@@ -72,13 +75,14 @@ export const getServerSideProps = wrapper.getServerSideProps( Store => async (re
     })
 
     if ( result != null ) {
-        //로그인이 되어있는거
-        Store.dispatch(user_login_request()); // axios post error with status num 500
-        console.log('쿠키값이 존재함.')
+        const newId = jwtId(result);
+        const newPw = jwtPw(result);
+        const data = {userid:`${newId}`,userpw:`${newPw}`};
+        Store.dispatch(user_login_request(data)); // axios post error with status num 500
     } else {
         //로그인을 진행해야 하는거
+        req.res.setHeader('Set-Cookie', `token=; path=/; expires=-1`);
         Store.dispatch(user_logout());
-        console.log('쿠키값이존재하지않음.')
     }
 
     Store.dispatch(END)

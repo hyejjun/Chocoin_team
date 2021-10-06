@@ -45,16 +45,18 @@ function loginAPI(data){
 }
 function* login(action){
     let result = yield call(loginAPI,action.data);
+    // console.log(result.data,"있음")
     let {data} = result;
     if(data.results !== undefined){
         yield put({
             type:'USER_LOGIN_SUCCESS',
             data:'OK',
+            userid:data.result.userid,
         })
     }else{
         yield put({
             type:'USER_LOGIN_ERROR',
-            data:'아이디와 비밀번호를 확인해주세요'
+            data:'아이디와 비밀번호를 확인해주세요',
         })
     }
 }

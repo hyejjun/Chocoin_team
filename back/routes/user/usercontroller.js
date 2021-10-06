@@ -68,12 +68,12 @@ let login_post = (req, res) => {
     let { userid, userpw } = req.body;
     let hashedpw = createHash(userpw);
     pool.getConnection((err, connection) => {
-        // if (err) throw err;
-        try {
+        if (err) throw err;
+        // try {
             let result = {};
             connection.query(`select * from usertable where userid = "${userid}" and userpw = "${hashedpw}"`, (error, results, fileds) => {
-                // if (error) throw error;
-                try {
+                if (error) throw error;
+                // try {
                     if (results.length === 0) {
                         result = {
                             result: 'Fail',
@@ -86,7 +86,8 @@ let login_post = (req, res) => {
                         let ctoken = token(userpw, userid);
                         result = {
                             result: 'OK',
-                            msg: '로그인 성공'
+                            msg: '로그인 성공',
+                            userid,
                         }
                         let test = { results, ctoken, result };
                         res.cookie('AccessToken', ctoken, { httpOnly: true, secure: true });
@@ -94,19 +95,18 @@ let login_post = (req, res) => {
                         console.log(result.msg);
                     }
                     connection.release();
-                }catch(error){
-                    console.log(error.response.data)
-                }
+                // }catch(error){
+                //     console.log(error.response.data)
+                // }
             })
-        } catch (error) {
-            console.log(error.response.data)
-        }
+        // } catch (error) {
+        //     console.log(error.response.data)
+        // }
     })
 };
 
 let logout = (req, res) => {
     res.clearCookie('AccessToken');
-    res.setHeader('Set-Cookie', `token=; path=/; expires=-1`);
     res.send('logout');
 }
 
