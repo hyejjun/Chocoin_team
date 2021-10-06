@@ -115,7 +115,8 @@ let logout = (req, res) => {
 
 let mypage_get = (req, res) => {
     let {userid} = req.body
-    let query = `select * from assetrecord where userid = '${userid}'`
+    // let query = `select * from assetrecord where userid = '${userid}'`
+    let query = `select * from assetrecord where pk=1`
     // let query = `select * from assetrecord where userid = 'web11'`
     get_data(req, res, query)
 }

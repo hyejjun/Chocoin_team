@@ -1,8 +1,8 @@
 import Styled from "styled-components"
-import { useState,componentDidMount } from "react"
+import { useState, componentDidMount } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { ExchangeInsert_REQUEST } from "../reducers/exchange"
-import { getTradingRecord_REQUEST,getOrderList_REQUEST } from '../reducers/tradingrecord'
+import { getTradingRecord_REQUEST, getOrderList_REQUEST } from '../reducers/tradingrecord'
 
 
 const TradeForm = (props, state) => {
@@ -22,22 +22,27 @@ const TradeForm = (props, state) => {
 
     const handelSubmit = (e) => {
         e.preventDefault()
-        const data = {
-            price: price,
-            qnt: qnt,
-            total: (price) * (qnt),
-            type: props.type
-        }
-        dispatch(ExchangeInsert_REQUEST(data))
-        dispatch(getTradingRecord_REQUEST())
-        dispatch(getOrderList_REQUEST())
+        if (price == 0 || qnt == 0) {
+            alert('매수/매도란을 확인해주세요')
+        } else if (price && qnt !== 0) {
+            alert('매수/매도 신청 확인되었습니다.')
+            const data = {
+                price: price,
+                qnt: qnt,
+                total: (price) * (qnt),
+                type: props.type
+            }
+            dispatch(ExchangeInsert_REQUEST(data))
+            dispatch(getTradingRecord_REQUEST())
+            dispatch(getOrderList_REQUEST())
 
-        setPrice(0)
-        setQnt(0)
+            setPrice(0)
+            setQnt(0)
+        }
     }
     dispatch(getTradingRecord_REQUEST())
-    
-    
+
+
     return (
 
         <>
