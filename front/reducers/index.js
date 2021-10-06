@@ -5,9 +5,7 @@ import exchange from './exchange';
 import tradingrecord from './tradingrecord';
 import mypage from './mypage';
 import user from './user';
-import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import axios from 'axios';
 
 const persistConfig = {
     key: "root",
