@@ -16,7 +16,7 @@ function* MyPage(action) {
     
     const { data } = result
     const data2 = result2.data
-    console.log(data2);
+
 
     if (data.msg && data2.msg === 'suc') {
         yield put({

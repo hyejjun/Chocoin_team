@@ -106,7 +106,10 @@ let login_post = (req, res) => {
 };
 
 let logout = (req, res) => {
+    res.cookie('AccessToken','',{maxAge:0});
     res.clearCookie('AccessToken');
+    // res.setHeader('Set-Cookie', `token2=; path=/; expires=-1`);
+    // document.cookie = "AccessToken" + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
     res.send('logout');
 }
 

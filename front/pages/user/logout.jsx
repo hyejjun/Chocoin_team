@@ -1,5 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
-import { user_logout } from "../../reducers/user";
 import { LogoutBtn } from '../../components/user/logout_css'
 
 const Logout = () => {

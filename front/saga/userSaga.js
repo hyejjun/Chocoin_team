@@ -42,7 +42,7 @@ function* id_check(action){
 
 function loginAPI(data){
     return axios.post(`${url}/user/login`,data,{withCredentials:true});
-}
+};
 function* login(action){
     let result = yield call(loginAPI,action.data);
     let {data} = result;
@@ -57,8 +57,8 @@ function* login(action){
             type:'USER_LOGIN_ERROR',
             data:'아이디와 비밀번호를 확인해주세요',
         })
-    }
-}
+    };
+};
 
 function logoutAPI(){
     return axios.get(`${url}/user/logout`);
