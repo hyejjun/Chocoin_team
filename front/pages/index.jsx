@@ -23,8 +23,8 @@ const index = () => {
                                 <Trade />
                             </OrderInner>
                         </OrderboxSection>
-                        <Transactionhistory />
-                        <Login />
+                        {/* <Transactionhistory /> */}
+                        {/* <Login /> */}
                     </OrderboxWrpa>
             </RootProvider>
         </>
