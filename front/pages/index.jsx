@@ -5,7 +5,6 @@ import Trade from '../components/Trade';
 import Styled from 'styled-components';
 import Transactionhistory from '../components/Transactionhistory';
 import Login from './user/login';
-import { useDispatch } from 'react-redux';
 import { user_login_request, user_logout } from '../reducers/user';
 import {END} from 'redux-saga'
 import wrapper from '../store/configureStore'

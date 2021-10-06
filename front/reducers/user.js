@@ -22,10 +22,6 @@ const USER_LOGIN_ERROR = "USER_LOGIN_ERROR";
 
 const USER_LOGOUT = "USER_LOGOUT";
 
-const USER_COOKIE_CHECK = "USER_COOKIE_CHECK";
-const USER_COOKIE_SUCCESS = "USER_COOKIE_SUCCESS";
-const USER_COOKIE_ERROR = "USER_COOKIE_ERROR";
-
 export const user_join_request = data => {
     return {
         type: USER_JOIN_REQUEST,
@@ -47,11 +43,6 @@ export const user_login_request = data => {
 export const user_logout = () => {
     return{
         type:USER_LOGOUT,
-    }
-}
-export const user_cookie_check = () => {
-    return {
-        type:USER_COOKIE_CHECK
     }
 }
 
@@ -124,21 +115,6 @@ const reducer = (state = initialState, action) => {
                 data:'logout',
                 IsLogin:false,
                 userid:'',
-            }
-        case USER_COOKIE_CHECK:
-            return{
-                ...state,
-                loading:true,
-            }
-        case USER_COOKIE_SUCCESS:
-            return{
-                ...state,
-                loading:false,
-            }
-        case USER_COOKIE_ERROR:
-            return{
-                ...state,
-                loading:false,
             }
         default:
             return state
