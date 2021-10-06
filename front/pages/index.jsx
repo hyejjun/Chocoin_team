@@ -56,7 +56,8 @@ const OrderInner = Styled.div`
 `
 
 export const getServerSideProps = wrapper.getServerSideProps(Store => async (req, res) => {
-    if (req.req.headers.cookie = undefined) {
+    
+    if (req.req.headers.cookie !== undefined) {
         let arr = req.req.headers.cookie.trim().split(';');
 
         let [result] = arr.map(v => {
@@ -75,15 +76,17 @@ export const getServerSideProps = wrapper.getServerSideProps(Store => async (req
             Store.dispatch(user_login_request(data)); // axios post error with status num 500
         } else {
             //로그인을 진행해야 하는거
-            req.res.setHeader('Set-Cookie', `token=; path=/; expires=-1`);
+            console.log('cookie')
             Store.dispatch(user_logout());
         }
-
         Store.dispatch(END)
         await Store.sagaTask.toPromise();
+    
     }else{
         return;
     }
+
+
 })
 
 export default index

@@ -89,7 +89,6 @@ const reducer = (state = initialState, action) => {
                 // IsLogin:undefined,
             }
         case USER_LOGIN_REQUEST:
-            console.log(action.data)
             return{
                 ...state,
                 loading:true,
