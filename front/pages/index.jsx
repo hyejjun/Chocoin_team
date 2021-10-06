@@ -5,11 +5,11 @@ import Trade from '../components/Trade';
 import Styled from 'styled-components';
 import Transactionhistory from '../components/Transactionhistory';
 import Login from './user/login';
-import { user_login_request, user_logout } from '../reducers/user';
-import {END} from 'redux-saga'
+// import { user_login_request, user_logout } from '../reducers/user';
+// import {END} from 'redux-saga'
 import wrapper from '../store/configureStore'
-import jwtId from '../../back/jwtId';
-import jwtPw from '../../back/jwtPw';
+// import jwtId from '../../back/jwtId';
+// import jwtPw from '../../back/jwtPw';
 
 const index = () => {
 
@@ -56,30 +56,30 @@ const OrderInner = Styled.div`
 `
 
 export const getServerSideProps = wrapper.getServerSideProps( Store => async (req,res) => {
-    let arr = req.req.headers.cookie.trim().split(';');
+    // let arr = req.req.headers.cookie.trim().split(';');
 
-    let [result] = arr.map(v=>{
-        let row = v.split("=")
-        if(row[0].trim() == "AccessToken"){
-           return row[1]
-        }
-    }).filter(v=>{
-        return v != null
-    })
+    // let [result] = arr.map(v=>{
+    //     let row = v.split("=")
+    //     if(row[0].trim() == "AccessToken"){
+    //        return row[1]
+    //     }
+    // }).filter(v=>{
+    //     return v != null
+    // })
 
-    if ( result != null ) {
-        const newId = jwtId(result);
-        const newPw = jwtPw(result);
-        const data = {userid:`${newId}`,userpw:`${newPw}`};
-        Store.dispatch(user_login_request(data)); // axios post error with status num 500
-    } else {
-        //로그인을 진행해야 하는거
-        req.res.setHeader('Set-Cookie', `token=; path=/; expires=-1`);
-        Store.dispatch(user_logout());
-    }
+    // if ( result != null ) {
+    //     const newId = jwtId(result);
+    //     const newPw = jwtPw(result);
+    //     const data = {userid:`${newId}`,userpw:`${newPw}`};
+    //     Store.dispatch(user_login_request(data)); // axios post error with status num 500
+    // } else {
+    //     //로그인을 진행해야 하는거
+    //     req.res.setHeader('Set-Cookie', `token=; path=/; expires=-1`);
+    //     Store.dispatch(user_logout());
+    // }
 
-    Store.dispatch(END)
-    await Store.sagaTask.toPromise();
+    // Store.dispatch(END)
+    // await Store.sagaTask.toPromise();
 } )
 
 export default index

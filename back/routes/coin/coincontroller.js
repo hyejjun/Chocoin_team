@@ -61,8 +61,9 @@ let tradingview = async (req, res) => {
 
 let get_orderdata = (req, res) => {
     let { price, qnt, type } = req.body
+    console.log(qnt);
 
-    let insetdata_query = `insert into ordertable (pk,userid,price,qty,ordertype,active,coinname) values(40,'algmlalgmlalgml',${price},${qnt},"${type}",true,"chocoin")`
+    let insetdata_query = `insert into ordertable (useridx,pk,price,qty,ordertype,active,coinname) values(1,1,${price},${qnt},"${type}",true,"chocoin")`
     pool.getConnection((err, connection) => {
         if (err) throw err;
         connection.query(insetdata_query, function (error, results, fields) {
