@@ -8,7 +8,6 @@ export const MYPAGE_GET_ERROR = "MYPAGE_GET_ERROR"
 
 
 export const MypageGet_REQUEST = (data) => {
-    console.log("들어옴 --- ",data);
     return {
         type: MYPAGE_GET_REQUEST,
         data
@@ -29,10 +28,8 @@ export const MypageGet_ERROR = () => {
 
 
 const reducer = (state = initalState, action) => {
-    console.log(action);
     switch (action.type) {
         case MYPAGE_GET_REQUEST:
-            console.log('first rendering')
             return {
                 ...state,
                 loading : true,
@@ -45,7 +42,6 @@ const reducer = (state = initalState, action) => {
                 loading: false,
             }
         case MYPAGE_GET_ERROR:
-            console.log('err')
             return {
                 ...state,
                 loading: false,

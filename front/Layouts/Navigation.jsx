@@ -57,7 +57,6 @@ const Gnb = Styled.ul`
         font-family: 'Noto Sans KR', sans-serif;
     }
     .join_wrap{
-        
         display : flex;
         flex-direction : row;
         

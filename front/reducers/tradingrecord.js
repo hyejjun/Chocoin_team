@@ -19,7 +19,6 @@ export const getTradingRecord_REQUEST = (data) => {
 }
 
 export const getTradingRecord_SUCCESS = (data) => {
-    console.log(data, 'dataaaaaaaaaaaa')
     return {
         type: GET_TRADINGRECORD_SUCCESS,
         data
@@ -40,7 +39,6 @@ export const getOrderList_REQUEST = () => {
 }
 
 export const getOrderList_SUCCESS = (data) => {
-    console.log(data, 'dataaaaaaaaaaaa')
     return {
         type: GET_ORDERLIST_SUCCESS,
         data
@@ -68,7 +66,6 @@ const reducer = (state = initalState, action) => {
                 loading: false,
             }
         case GET_TRADINGRECORD_ERROR:
-            console.log('error')
             return {
                 ...state,
                 loading: false

@@ -14,13 +14,11 @@ const Mypage = () => {
 
   let list = []
   if(data !== undefined){
-      console.log(data);
       let item = data
       list = item.map((v,i)=>{
           return(
               <>
                 <div key={i}>
-
                 </div>
              </>
           )

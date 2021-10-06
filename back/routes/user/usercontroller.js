@@ -65,38 +65,46 @@ let login_get = (req, res) => {
 }
 
 let login_post = (req, res) => {
-    let {userid,userpw} = req.body;
+    let { userid, userpw } = req.body;
     let hashedpw = createHash(userpw);
     pool.getConnection((err, connection) => {
-        if (err) throw err;
-        let result = {};
-        connection.query(`select * from usertable where userid = "${userid}" and userpw = "${hashedpw}"`, (error, results, fileds) => {
-            if (error) throw error;
-            if (results.length === 0) {
-                result = {
-                    result:'Fail',
-                    msg:'로그인 실패'
+        // if (err) throw err;
+        try {
+            let result = {};
+            connection.query(`select * from usertable where userid = "${userid}" and userpw = "${hashedpw}"`, (error, results, fileds) => {
+                // if (error) throw error;
+                try {
+                    if (results.length === 0) {
+                        result = {
+                            result: 'Fail',
+                            msg: '로그인 실패'
+                        }
+                        console.log(result.msg);
+                        let test = { result };
+                        res.json(test);
+                    } else {
+                        let ctoken = token(userpw, userid);
+                        result = {
+                            result: 'OK',
+                            msg: '로그인 성공'
+                        }
+                        let test = { results, ctoken, result };
+                        res.cookie('AccessToken', ctoken, { httpOnly: true, secure: true });
+                        res.json(test);
+                        console.log(result.msg);
+                    }
+                    connection.release();
+                }catch(error){
+                    console.log(error.response.data)
                 }
-                console.log(result.msg);
-                let test = {result};
-                res.json(test);
-            } else {
-                let ctoken = token(userpw,userid);
-                result = {
-                    result:'OK',
-                    msg:'로그인 성공'
-                }
-                let test = {results, ctoken, result};
-                res.cookie('AccessToken',ctoken,{httpOnly:true,secure:true});
-                res.json(test);
-                console.log(result.msg);
-            }
-            connection.release();
-        })
+            })
+        } catch (error) {
+            console.log(error.response.data)
+        }
     })
 };
 
-let logout = (req,res)=>{
+let logout = (req, res) => {
     res.clearCookie('AccessToken');
     res.setHeader('Set-Cookie', `token=; path=/; expires=-1`);
     res.send('logout');
@@ -109,8 +117,7 @@ let mypage_get = (req, res) => {
 }
 
 let mypage_post = (req, res) => {
-    let{input,output,totalasset} = req.body
-    console.log(req.body)
+    let { input, output, totalasset } = req.body
     let query = `insert into assetrecord(pk,userid,input,output,totalasset) values(10,'userid',${input},${output},${totalasset})`
     send_data(req, res, query)
 }
