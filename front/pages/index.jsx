@@ -83,7 +83,6 @@ export const getServerSideProps = wrapper.getServerSideProps(Store => async (req
         }
         Store.dispatch(END)
         await Store.sagaTask.toPromise();
-
     } else {
         return;
     }

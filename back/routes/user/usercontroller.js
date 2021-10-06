@@ -1,16 +1,8 @@
-// 필요 경로================================
-// 회원가입 창 들어옴
-// 회원가입 시도
-// 로그인 창 들어옴
-// 로그인 시도
-// mypage
-// mypage 수정
-
 const mysql = require('mysql')
-require('dotenv').config()
-const config = require('../../db_config.json')
-const { get_data, send_data } = require('../../db.js')
-const pool = mysql.createPool(config)
+require('dotenv').config();
+const config = require('../../db_config.json');
+const { get_data, send_data } = require('../../db.js');
+const pool = mysql.createPool(config);
 const createHash = require('../../chash');
 const token = require('../../jwt');
 
@@ -69,52 +61,44 @@ let login_post = (req, res) => {
     let hashedpw = createHash(userpw);
     pool.getConnection((err, connection) => {
         if (err) throw err;
-        // try {
-            let result = {};
-            connection.query(`select * from usertable where userid = "${userid}" and userpw = "${hashedpw}"`, (error, results, fileds) => {
-                if (error) throw error;
-                // try {
-                    if (results.length === 0) {
-                        result = {
-                            result: 'Fail',
-                            msg: '로그인 실패'
-                        }
-                        console.log(result.msg);
-                        let test = { result };
-                        res.json(test);
-                    } else {
-                        let ctoken = token(userpw, userid);
-                        result = {
-                            result: 'OK',
-                            msg: '로그인 성공',
-                            userid,
-                        }
-                        let test = { results, ctoken, result };
-                        res.cookie('AccessToken', ctoken, { httpOnly: true, secure: true });
-                        res.json(test);
-                        console.log(result.msg);
-                    }
-                    connection.release();
-                // }catch(error){
-                //     console.log(error.response.data)
-                // }
-            })
-        // } catch (error) {
-        //     console.log(error.response.data)
-        // }
+        let result = {};
+        connection.query(`select * from usertable where userid = "${userid}" and userpw = "${hashedpw}"`, (error, results, fileds) => {
+            if (error) throw error;
+            if (results.length === 0) {
+                result = {
+                    result: 'Fail',
+                    msg: '로그인 실패'
+                }
+                console.log(result.msg);
+                let test = { result };
+                res.json(test);
+            } else {
+                let ctoken = token(userpw, userid);
+                result = {
+                    result: 'OK',
+                    msg: '로그인 성공',
+                    userid,
+                }
+                let test = { results, ctoken, result };
+                res.cookie('AccessToken', ctoken, { httpOnly: true, secure: true });
+                res.json(test);
+            }
+            connection.release();
+        })
     })
 };
 
 let logout = (req, res) => {
-    res.cookie('AccessToken','',{maxAge:0});
-    res.clearCookie('AccessToken');
+
+    // res.cookie('AccessToken', '', { maxAge: 0 });
+    // res.clearCookie('AccessToken').send(req.cookies.name);
     // res.setHeader('Set-Cookie', `token2=; path=/; expires=-1`);
     // document.cookie = "AccessToken" + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
     res.send('logout');
 }
 
 let mypage_get = (req, res) => {
-    let {userid} = req.body
+    let { userid } = req.body
     // let query = `select * from assetrecord where userid = '${userid}'`
     let query = `select * from assetrecord where pk=1`
     // let query = `select * from assetrecord where userid = 'web11'`
@@ -122,12 +106,11 @@ let mypage_get = (req, res) => {
 }
 
 let mypage_get2 = (req, res) => {
-    let {userid} = req.body
+    let { userid } = req.body
     let query = `select * from cointable where holder = '${userid}'`
     // let query = `select * from assetrecord where userid = 'web11'`
     get_data(req, res, query)
 }
-
 
 // let mypage_post = (req, res) => {
 //     let{input,output,totalasset} = req.body

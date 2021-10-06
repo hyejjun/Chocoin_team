@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+require('dotenv').config();
 const config = require('./db_config.json');
 const pool = mysql.createPool(config);
 const messageData = require('./messageData');
@@ -26,19 +27,19 @@ async function getBuyList() {
         connection = await pool.getConnection(async conn => conn);
         try {
             const buyListSql = `
-        SELECT price,sum(leftover) AS leftover 
-        FROM order_list 
-        WHERE order_type=0 AND leftover>0
-        GROUP BY price
-        ORDER BY price DESC
-        LIMIT 5;
-        `
+            SELECT price,pty
+            FROM ordertype 
+            WHERE ordertype="BUY
+            GROUP BY price
+            ORDER BY price DESC
+            LIMIT 5;
+            `
             const temp = await connection.execute(buyListSql, []);
             ret.success = true;
             ret.buyList.success = true;
             ret.buyList.list = temp[0];
         } catch (error) {
-            console.log('Query Error');
+            console.log('Query Error Buy1');
             console.log(error)
             ret.buyList = messageData.errorMessage(error)
         }
@@ -52,8 +53,6 @@ async function getBuyList() {
     return ret;
 }
 
-
-
 async function getSellList() {
     let ret = { ...defaultRet };
     let connection;
@@ -61,19 +60,19 @@ async function getSellList() {
         connection = await pool.getConnection(async conn => conn);
         try {
             const sellListSql = `
-        SELECT price,sum(leftover) AS leftover 
-        FROM order_list 
-        WHERE order_type=1 AND leftover>0
-        GROUP BY price
-        ORDER BY price ASC
-        LIMIT 5;
-        `
+            SELECT price,qty 
+            FROM order_list 
+            WHERE orderstype="SELL"
+            GROUP BY price
+            ORDER BY price ASC
+            LIMIT 5;
+            `
             const temp = await connection.execute(sellListSql, []);
             ret.success = true;
             ret.sellList.success = true;
             ret.sellList.list = temp[0].reverse();
         } catch (error) {
-            console.log('Query Error');
+            console.log('Query Error SELL1');
             console.log(error)
             ret.sellList = messageData.errorMessage(error)
         }
@@ -87,45 +86,40 @@ async function getSellList() {
     return ret;
 }
 
-
 async function getTransactionList(n) {
-    let ret = { ...defaultRet };
-    let connection;
-    try {
-        connection = await pool.getConnection(async conn => conn);
-        try {
-            const transactionListSql = `
-        SELECT  *
-        FROM transaction
-        ORDER BY id DESC
-        LIMIT ${n};
-        `
-            const temp = await connection.execute(transactionListSql, []);
-            temp[0].forEach((v, i) => {
-                temp[0][i].tx_date = temp[0][i].tx_date.toLocaleString();
-            })
-            ret.success = true;
-            ret.txList.success = true;
-            ret.txList.list = temp[0];
-        } catch (error) {
-            console.log('Query Error');
-            console.log(error)
-            ret.txList = messageData.errorMessage(error)
-        }
-    } catch (error) {
-        console.log('DB Error')
-        console.log(error)
-        ret.txList = messageData.errorMessage(error);
-    } finally {
-        connection.release();
-    }
-    return ret;
+    console.log('getTransactionList')
+    // let ret = { ...defaultRet };
+    // let connection;
+    // try {
+    //     connection = await pool.getConnection(async conn => conn);
+    //     try {
+    //         const transactionListSql = `
+    //         SELECT  *
+    //         FROM transaction
+    //         ORDER BY id DESC
+    //         LIMIT ${n};
+    //         `
+    //         const temp = await connection.execute(transactionListSql, []);
+    //         temp[0].forEach((v, i) => {
+    //             temp[0][i].tx_date = temp[0][i].tx_date.toLocaleString();
+    //         })
+    //         ret.success = true;
+    //         ret.txList.success = true;
+    //         ret.txList.list = temp[0];
+    //     } catch (error) {
+    //         console.log('Query Error');
+    //         console.log(error)
+    //         ret.txList = messageData.errorMessage(error)
+    //     }
+    // } catch (error) {
+    //     console.log('DB Error')
+    //     console.log(error)
+    //     ret.txList = messageData.errorMessage(error);
+    // } finally {
+    //     connection.release();
+    // }
+    // return ret;
 }
-
-///고가 저가 시가 종가 뽑는 것도 만들어야되나? 
-// 그건 내일 api 명세 보고 결정. 
-
-
 
 async function getResult(n) {  //return array
     let ret = { ...defaultRet };
@@ -134,38 +128,32 @@ async function getResult(n) {  //return array
         connection = await pool.getConnection(async conn => conn);
         try {
             const buyListSql = ` //매수
+                SELECT price,qty
+                FROM ordertable
+                WHERE ordertype="BUY"
+                GROUP BY price
+                ORDER BY price DESC
+                LIMIT 5
+            `
+            const buytemp = await connection.execute(buyListSql, []);
+            ret.buyList.success = true;
+            ret.buyList.list = buytemp[0];
 
+            const sellListSql = `
+                SELECT price,qty
+                FROM ordertable
+                WHERE ordertype="SELL"
+                GROUP BY price
+                ORDER BY price DESC
+                LIMIT 5
             `
 
-            //   const buyListSql = `
-            //   SELECT price,sum(leftover) AS leftover 
-            //   FROM order_list 
-            //   WHERE order_type=0 AND leftover>0
-            //   GROUP BY price
-            //   ORDER BY price DESC
-            //   LIMIT 5;
-            //   `
-            //   const buytemp = await connection.execute(buyListSql, []);
-            //   ret.buyList.success = true;
-            //   ret.buyList.list = buytemp[0];
+            const selltemp = await connection.execute(sellListSql, []);
+            ret.sellList.success = true;
+            ret.sellList.list = selltemp[0].reverse();
 
-            //   const sellListSql = `
-            //     SELECT price,sum(leftover) AS leftover 
-            //     FROM order_list 
-            //     WHERE order_type=1 AND leftover>0
-            //     GROUP BY price
-            //     ORDER BY price ASC
-            //     LIMIT 5;
-            //     `
-            //   const selltemp = await connection.execute(sellListSql, []);
-            //   ret.sellList.success = true;
-            //   ret.sellList.list = selltemp[0].reverse();
-
-            //   // //가짜 트랜잭션 데이터 
-            //   await makeTxTemp(connection);
-            //   ret.chartdata = await oneMinuteInterval(connection);
-
-
+            // await makeTxTemp(connection);
+            // ret.chartdata = await oneMinuteInterval(connection);
 
             //   let transactionListSql = `
             //     SELECT  *
@@ -183,7 +171,7 @@ async function getResult(n) {  //return array
             //   ret.txList.list = txtemp[0];
 
         } catch (error) {
-            console.log('Query Error');
+            console.log('Query Error getResult');
             console.log(error)
             ret = messageData.errorMessage(error)
         }
@@ -206,61 +194,56 @@ async function clacMyAsset(conn, user_idx) {
 }
 
 
-async function oneMinuteInterval(conn) {
-    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+// async function oneMinuteInterval(conn) {
+//     console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxx')
 
-    const allTxSql = `
-  SELECT price,tx_date 
-  FROM transaction 
-  ORDER BY tx_date ;
-  `
+//     const allTxSql = `
+//     SELECT price,ordertime 
+//     FROM transaction 
+//     ORDER BY ordertime ;
+//     `
 
-    const [temp] = await conn.execute(allTxSql, []);
-    if (temp.length == 0) return [];
+//     const [temp] = await conn.execute(allTxSql, []);
+//     if (temp.length == 0) return [];
 
-    let result = [{ time: temp[0].tx_date, low: temp[0].price, start: temp[0].price, end: temp[0].price, high: temp[0].price }];
-    let cnt = 1;
+//     let result = [{ time: temp[0].tx_date, low: temp[0].price, start: temp[0].price, end: temp[0].price, high: temp[0].price }];
+//     let cnt = 1;
 
-    console.log(temp)
+//     console.log(temp)
 
-
-    while (cnt < temp.length) {
-        let preData = result[result.length - 1];
-        const now = new Date(temp[cnt].tx_date);
-        preTime = new Date(preData.time)
-        if (compareTime(preTime, now) == true) {
-            preData.end = temp[cnt].price;
-            if (preData.high == null) {
-                preData.high = temp[cnt].price;
-            }
-            if (preData.low == null) {
-                preData.low = temp[cnt].price;
-            }
-            if (preData.high < temp[cnt].price) {
-                preData.low = temp[cnt].price;
-            }
-            if (preData.low > temp[cnt].price) {
-                preData.low = temp[cnt].price;
-            }
-            cnt++;
-        } else {
-            const newDate = new Date(preTime).setMinutes(preTime.getMinutes() + 1);
-            result.push({ time: new Date(newDate), low: null, start: preData.end, end: preData.end, high: null })
-        }
-    }
-    console.log(result)
-    const arrResult = result.map(v => Object.entries(v).map(x => x[1]));
-    return arrResult;
-
-}
-
+//     while (cnt < temp.length) {
+//         let preData = result[result.length - 1];
+//         const now = new Date(temp[cnt].tx_date);
+//         preTime = new Date(preData.time)
+//         if (compareTime(preTime, now) == true) {
+//             preData.end = temp[cnt].price;
+//             if (preData.high == null) {
+//                 preData.high = temp[cnt].price;
+//             }
+//             if (preData.low == null) {
+//                 preData.low = temp[cnt].price;
+//             }
+//             if (preData.high < temp[cnt].price) {
+//                 preData.low = temp[cnt].price;
+//             }
+//             if (preData.low > temp[cnt].price) {
+//                 preData.low = temp[cnt].price;
+//             }
+//             cnt++;
+//         } else {
+//             const newDate = new Date(preTime).setMinutes(preTime.getMinutes() + 1);
+//             result.push({ time: new Date(newDate), low: null, start: preData.end, end: preData.end, high: null })
+//         }
+//     }
+//     console.log(result)
+//     const arrResult = result.map(v => Object.entries(v).map(x => x[1]));
+//     return arrResult;
+// }
 
 function compareTime(pre, now) {
     const preDate = new Date(pre);
     const nowDate = new Date(now);
-
     // console.log('==='+preDate+'     '+nowDate+'===')
-
 
     if (preDate.getFullYear() == nowDate.getFullYear()
         && preDate.getMonth() == nowDate.getMonth()
@@ -268,29 +251,23 @@ function compareTime(pre, now) {
         && preDate.getHours() == nowDate.getHours()
         && preDate.getMinutes() == nowDate.getMinutes()
     ) {
-
         return true;
     }
     return false;
 }
 
+// async function makeTxTemp(conn) {
+//     const sql = `INSERT INTO transaction (sell_orderid,sell_amount,sell_commission,buy_orderid,buy_amount,buy_commission,price,tx_date) VALUES(1,100,100,2,200,100,?,?)`
+//     let now = new Date();
+//     for (let i = 0; i < 100; i++) {
+//         let random = Math.random() * 1000;
+//         let newDate = (new Date().setMinutes(now.getMinutes() - 50 + i));
+//         let finalDate = new Date(newDate);
+//         let params = [random, finalDate];
 
-async function makeTxTemp(conn) {
-
-    const sql = `INSERT INTO transaction (sell_orderid,sell_amount,sell_commission,buy_orderid,buy_amount,buy_commission,price,tx_date) VALUES(1,100,100,2,200,100,?,?)`
-    let now = new Date();
-    for (let i = 0; i < 100; i++) {
-        let random = Math.random() * 1000;
-        let newDate = (new Date().setMinutes(now.getMinutes() - 50 + i));
-        let finalDate = new Date(newDate);
-        let params = [random, finalDate];
-
-        const [temp] = await conn.execute(sql, params);
-    }
-}
-
-
-
+//         const [temp] = await conn.execute(sql, params);
+//     }
+// }
 
 module.exports = {
     getResult,
