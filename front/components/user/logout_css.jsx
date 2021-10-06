@@ -8,4 +8,8 @@ export const LogoutBtn = Styled.div`
         height: 35px;
         color:#fff;
     }
+
+    & > button:hover{
+        cursor:pointer;
+    }
 `

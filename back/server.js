@@ -9,6 +9,9 @@ const expressSession = require('express-session');
 
 const cors = require('cors');
 const config = require('./db_config.json');
+const socket = require('./socket');
+
+socket.wsInit();
 
 app.use(expressSession({
     resave:false,

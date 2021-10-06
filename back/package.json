@@ -22,6 +22,7 @@
     "request": "^2.88.2",
     "sequelize": "^6.6.5",
     "sequelize-cli": "^6.2.0",
-    "sync-mysql": "^3.0.1"
+    "sync-mysql": "^3.0.1",
+    "ws": "^8.2.3"
   }
 }
