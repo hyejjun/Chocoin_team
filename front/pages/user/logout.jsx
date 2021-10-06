@@ -1,4 +1,5 @@
 import { LogoutBtn } from '../../components/user/logout_css'
+import { useSelector } from 'react-redux';
 
 const Logout = () => {
 
