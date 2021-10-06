@@ -6,19 +6,13 @@ import Styled from 'styled-components';
 import Transactionhistory from '../components/Transactionhistory';
 import Login from './user/login';
 import { useDispatch } from 'react-redux';
-import { user_cookie_check, user_login_request, user_logout } from '../reducers/user';
+import { user_login_request, user_logout } from '../reducers/user';
 import {END} from 'redux-saga'
 import wrapper from '../store/configureStore'
 import jwtId from '../../back/jwtId';
 import jwtPw from '../../back/jwtPw';
 
 const index = () => {
-
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(user_cookie_check());
-    }, []);
 
     return (
         <>
