@@ -111,16 +111,26 @@ let logout = (req, res) => {
 }
 
 let mypage_get = (req, res) => {
-    let query = `select * from assetrecord where userid = ${userid}`
+    let {userid} = req.body
+    let query = `select * from assetrecord where userid = '${userid}'`
+    // let query = `select * from assetrecord where userid = 'web11'`
     get_data(req, res, query)
-
 }
 
-let mypage_post = (req, res) => {
-    let { input, output, totalasset } = req.body
-    let query = `insert into assetrecord(pk,userid,input,output,totalasset) values(10,'userid',${input},${output},${totalasset})`
-    send_data(req, res, query)
+let mypage_get2 = (req, res) => {
+    let {userid} = req.body
+    let query = `select * from cointable where holder = '${userid}'`
+    // let query = `select * from assetrecord where userid = 'web11'`
+    get_data(req, res, query)
 }
+
+
+// let mypage_post = (req, res) => {
+//     let{input,output,totalasset} = req.body
+//     console.log(req.body)
+//     let query = `insert into assetrecord(pk,userid,input,output,totalasset) values(10,'userid',${input},${output},${totalasset})`
+//     send_data(req, res, query)
+// }
 
 module.exports = {
     join_get,
@@ -128,7 +138,7 @@ module.exports = {
     mypage_get,
     join_post,
     login_post,
-    mypage_post,
+    mypage_get2,
     id_check,
     logout
 }

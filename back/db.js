@@ -50,6 +50,44 @@ function send_data(req,res,querysyn){
     })
 }
 
+let trade = async (req,type,qnt,price)=>{
+    //let trade_query = `select price,ordertype,sum(qty) as sum,ordertime from ordertable where (active=0 AND ordertype='SELL') group by price`
+    //let trade_result = ~query(trader_query,[0,SELL])
+    //let trade_query = `select price,ordertype,sum(qty) as sum,ordertime from ordertable where (active=0 AND ordertype=${type}) group by price,ordertype`
+    let trade_query = `select userid,price,qty,ordertime from ordertable where (active=1 and ordertype="SELL" AND price>=${price}) order by price,ordertime asc;`
+    
+        pool.getConnection((err,connection)=>{
+            if(err) throw err;
+                connection.query(trade_query,function(error,results,fields){
+                    console.log(results)
+                    for(i=0;i<=results.length-1;i++){
+                        if(error) throw(error);
+                        if(results==undefined){
+                            console.log('failllllll')
+                        }else{
+                            //qnt = qnt - results[i].qty
+                            //let date_order_Query = `update from order`
+                            //connection.query()
+                            
+                            qnt = qnt - results[i].qty;
+                            if(qnt>=0){
+                                console.log(qnt,'qnt는 사는 중')                                               
+                                
+                            }else if(qnt<0){
+                                console.log(qnt,'qnttttttttttttttttt')
+                                //console.log()
+                            }
+                            
+                            
+                      
+                            //console.log(results,'resultssssssssssssssss')
+                        }
+                        
+                    }
+                })
+        })
+}
+
 // 매도 매수 페이지 들어온 경우---------------------------------------------
 let coin_info = (req,res) => {
     let query = `select * from transactions order by contracttime desc`;
@@ -75,5 +113,6 @@ let buyClick = (req,res) => {
 
 module.exports = {
     get_data,
-    send_data
+    send_data,
+    trade
 }
