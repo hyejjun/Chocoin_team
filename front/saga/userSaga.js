@@ -64,7 +64,7 @@ function logoutAPI(){
     return axios.get(`${url}/user/logout`);
 }
 function* logout(){
-    let result = yield call(logoutAPI);
+    yield call(logoutAPI);
 }
 
 function* watchUser(){
