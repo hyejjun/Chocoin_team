@@ -5,6 +5,7 @@ const { get_data, send_data } = require('../../db.js');
 const config = require('../../db_config.json')
 const pool = mysql.createPool(config)
 const jwtId = require('../../jwtId');
+const exchangeData = require('../../exchangeData');
 
 const headers = { "Content-type": "application/json" }
 const USER = process.env.RPC_USER;
@@ -61,7 +62,7 @@ let tradingview = async (req, res) => {
 }
 
 let get_orderdata = async (req,res)=>{
-    let { price, qnt, type, userid } =req.body;
+    let {  price, qnt, type, userid } = req.body;
 
     // userid를 가지고 useridx 값 구하기
     let useridxSql = `select id from usertable where userid="${userid}"`;
@@ -71,12 +72,46 @@ let get_orderdata = async (req,res)=>{
     let assetSql = `select ifnull(sum(input)-sum(output),0) as asset from assetrecord where useridx="${useridx}"`;
     let [{asset:myAsset}] = await query(assetSql);
 
-    // 현재 로그인한 계정에 주문내역이 있는지
-    let preOrderSql = `select * from ordertable where useridx="${useridx}"`;
-    let result = await query(preOrderSql);
-    console.log(result);
+    // 현재 로그인한 계정에 채결되지 않은 주문내역이 있는지 : 있다면 주문의 가격이 총 얼만지
+    let preOrderSql = `select price from ordertable where useridx="${useridx}" and active=0`;
+    let preOrder = await query(preOrderSql);
+    let result = 0;
+    let preSumArr = preOrder.map(v=>{
+        result += v.price
+        return result
+    });
+    const preSum = preSumArr.length > 0 ? preSumArr[preSumArr.length-1] : 0;
 
-    res.json({results:"ddd"});
+    // 채결되지 않은 주문내역만큼의 자산은 사용할 수 없음.
+    const availableAsset = myAsset-preSum;
+    // 마이너스로 뜰때는 어떻게 해야 하는지 처리 필요함
+
+    // if((qnt*price) > availableAsset){
+    if(availableAsset ===null ){
+        res.json({success:"fail",msg:"자산이 충분하지 않음"});
+    }else{
+
+        // 거래 아이디 인가..?
+        let insertOrderTable = `INSERT INTO ordertable (pk, useridx, qty, price, ordertype, active, coinname) VALUES (1,${useridx},${qnt},${price},"${type}",0,"chocoin");`
+        let {insertId:orderResult} = await query(insertOrderTable);
+        
+        // 거래가능한 주문 목록 : 가격 - 시간 - 물량 순으로
+        const availableOrderSql = `SELECT * FROM ordertable WHERE useridx NOT IN(${useridx}) AND price<=${price} AND active=0 ORDER BY price ASC, ordertime ASC, qty DESC;`;
+        let availableOrder = await query(availableOrderSql);
+        
+        if(availableOrder.length == 0){
+            const UNLOCKSQL = `UNLOCK TABLES;`;
+            await query(UNLOCKSQL);
+            // ws.broadcast(await exchangeData.getBuyList());
+            res.json({msg:'거래완료'})
+        }
+
+
+
+        res.json({success:"success",results:"ddd"});
+    };
+
+
 }
 
 function query(sql){
@@ -197,5 +232,5 @@ let trade = (req, res) => {
 module.exports = {
     coin_info,
     get_orderdata,
-    tradingview
+    tradingview,
 };

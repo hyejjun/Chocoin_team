@@ -9,7 +9,7 @@ const defaultRet = {
     txList: { success: null, list: null },
     success: true,
     chartdata: [],
-}
+};
 
 // 가격 상위 매수 목록 5개를 뿌려줌. 
 // 그런데 매수 목록이 없다면? 없다고 알려줘야함
@@ -20,37 +20,46 @@ const defaultRet = {
 // 쿼리문 에러는 쿼리를 잘 짰으면 발생할 이유가 없음. 
 // DB 조회시 오류가 발생했다면 그것도 알려줘야함. 목록이 없는 게 아니라. 오류라는
 
+// function query(sql) {
+//     return new Promise((resolve, reject) => {
+//         pool.getConnection((error, connection) => {
+//             if (error) reject(error);
+//             connection.query(sql, (error, results, fields) => {
+//                 if (error) reject(error)
+//                 if (results === undefined) reject('error');
+//                 resolve(results);
+//                 connection.release();
+//             })
+//         })
+//     })
+// }
+
 async function getBuyList() {
-    let ret = { ...defaultRet };
-    let connection;
-    try {
-        connection = await pool.getConnection(async conn => conn);
-        try {
-            const buyListSql = `
-            SELECT price,pty
-            FROM ordertype 
-            WHERE ordertype="BUY
-            GROUP BY price
-            ORDER BY price DESC
-            LIMIT 5;
-            `
-            const temp = await connection.execute(buyListSql, []);
-            ret.success = true;
-            ret.buyList.success = true;
-            ret.buyList.list = temp[0];
-        } catch (error) {
-            console.log('Query Error Buy1');
-            console.log(error)
-            ret.buyList = messageData.errorMessage(error)
-        }
-    } catch (error) {
-        console.log('DB Error')
-        console.log(error)
-        ret.buyList = messageData.errorMessage(error);
-    } finally {
-        connection.release();
-    }
-    return ret;
+    // let ret = { ...defaultRet };
+    // pool.getConnection( async (err,connection)=>{
+    //     if(err) throw err;
+    //     try {
+    //         const buyListSql = `
+    //             SELECT price,pty
+    //             FROM ordertype 
+    //             WHERE ordertype="BUY"
+    //             GROUP BY price
+    //             ORDER BY price DESC
+    //             LIMIT 5;
+    //             `
+    //         const temp = await query(buyListSql);
+    //         console.log(temp, "=========")
+    //         // ret.success = true;
+    //         // ret.buyList.success = true;
+    //         // ret.buyList.list = temp[0];
+    //     } catch (error) {
+    //         console.log('Query Error Buy1');
+    //         console.log(error)
+    //         ret.buyList = messageData.errorMessage(error)
+    //     }
+    // })
+    // connection.release();
+    // return ret;
 }
 
 async function getSellList() {

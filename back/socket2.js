@@ -1,6 +1,7 @@
 const WebSocket = require("ws");
 const wPORT = process.env.WS_PORT || 6005;
 let clients = [];
+const {get_orderdata} = require('./routes/coin/coincontroller');
 
 const ConnectionStatus = [
     "CONNECTING", "OPEN", "CLOSING", "CLOSED", "UNINSTANTIATED",
@@ -11,8 +12,9 @@ async function wsInit() {
     console.log(`WebSocket Connected Port : ${wPORT}`);
     server.on('connection', async (ws) => {
         console.log('server connnection on');
+        const result = get_orderdata();
         clients.push(ws);
-        ws.send(JSON.stringify({userid:'1234'}));
+        ws.send(JSON.stringify(result));
     })
 };
 
