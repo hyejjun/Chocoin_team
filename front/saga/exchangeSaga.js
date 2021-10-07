@@ -5,11 +5,8 @@ import { url } from './url'
 function exchangeAPI(data) {
     return axios.post(`${url}/coin/order`,data)
 }
-
 function* exchange(action) {
-    const result = yield call(exchangeAPI, action.data)
-
-    
+    const result = yield call(exchangeAPI, action.data,{withCredentials:true});
     const { data } = result
 
     // if (data.result === 'OK') {

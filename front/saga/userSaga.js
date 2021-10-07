@@ -23,7 +23,7 @@ function* join(action){
 }
 
 function id_check_API(data){
-    return axios.post(`${url}/user/id_check`,data);
+    return axios.post(`${url}/user/id_check`,data,{withCredentials:true});
 }
 function* id_check(action){
     let result = yield call(id_check_API,action);

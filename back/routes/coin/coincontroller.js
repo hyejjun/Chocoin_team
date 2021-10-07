@@ -4,6 +4,7 @@ const mysql = require('mysql');
 const { get_data, send_data } = require('../../db.js');
 const config = require('../../db_config.json')
 const pool = mysql.createPool(config)
+const jwtId = require('../../jwtId');
 
 const headers = { "Content-type": "application/json" }
 const USER = process.env.RPC_USER;
@@ -59,7 +60,41 @@ let tradingview = async (req, res) => {
     await get_data(req, res, query)
 }
 
-let get_orderdata = (req, res) => {
+let get_orderdata = async (req,res)=>{
+    let { price, qnt, type, userid } =req.body;
+
+    // userid를 가지고 useridx 값 구하기
+    let useridxSql = `select id from usertable where userid="${userid}"`;
+    let [{id:useridx}] = await query(useridxSql);
+
+    // 내가 가지고 있는 자산 확인 : 내 자산 = myAsset
+    let assetSql = `select ifnull(sum(input)-sum(output),0) as asset from assetrecord where useridx="${useridx}"`;
+    let [{asset:myAsset}] = await query(assetSql);
+
+    // 현재 로그인한 계정에 주문내역이 있는지
+    let preOrderSql = `select * from ordertable where useridx="${useridx}"`;
+    let result = await query(preOrderSql);
+    console.log(result);
+
+    res.json({results:"ddd"});
+}
+
+function query(sql){
+    return new Promise((resolve,reject)=>{
+        pool.getConnection((error,connection)=>{
+            if(error) reject(error);
+            connection.query(sql,(error,results,fields)=>{
+                if(error) reject(error)
+                if(results === undefined) reject('error');
+                resolve(results);
+                connection.release();
+            })
+        })
+    })
+}
+
+// 매수 하는 쪽
+let get_orderdata2 = (req, res) => {
     let { price, qnt, type } = req.body
     console.log(qnt);
 
@@ -76,7 +111,6 @@ let get_orderdata = (req, res) => {
             connection.release();
         })
     })
-
 
     /* 여기서 부터 거래 */
     let get_orderlist = `select pk,price,qty,ordertime from ordertable where active=1 and ordertype="SELL" and price=${price} order by price,ordertime asc`

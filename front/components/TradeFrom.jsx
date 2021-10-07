@@ -7,7 +7,7 @@ import { getTradingRecord_REQUEST, getOrderList_REQUEST } from '../reducers/trad
 
 const TradeForm = (props, state) => {
     const dispatch = useDispatch()
-
+    const {userid} = useSelector(state=>state.user);
     const [price, setPrice] = useState(0)
     const [qnt, setQnt] = useState(0)
 
@@ -22,6 +22,7 @@ const TradeForm = (props, state) => {
 
     const handelSubmit = (e) => {
         e.preventDefault()
+
         if (price == 0 || qnt == 0) {
             alert('매수/매도란을 확인해주세요')
         } else if (price && qnt !== 0) {
@@ -30,7 +31,8 @@ const TradeForm = (props, state) => {
                 price: price,
                 qnt: qnt,
                 total: (price) * (qnt),
-                type: props.type
+                type: props.type,
+                userid,
             }
             dispatch(ExchangeInsert_REQUEST(data))
             dispatch(getTradingRecord_REQUEST())

@@ -5,10 +5,7 @@ const WebSocketWrap = ({ children }) => {
   const [socketUrl, setSocketUrl] = useState("ws://localhost:6005");
   const messageHistory = useRef([]);    //DOM 저장 할 수 있는 변수
 
-  const { sendMessage, lastMessage, lastJsonMessage, readyState } =
-    useWebSocket(socketUrl);
-
-    console.log(lastJsonMessage,"last json message");
+  const { lastJsonMessage } = useWebSocket(socketUrl);
 
   useMemo(() => {
     if (lastJsonMessage != null) {

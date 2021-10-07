@@ -10,13 +10,13 @@ import { END } from 'redux-saga'
 import wrapper from '../store/configureStore'
 import jwtId from '../../back/jwtId';
 import jwtPw from '../../back/jwtPw';
-import WebSocketWrap from './WebSocket';
+// import WebSocketWrap from './WebSocket';
 
 const index = () => {
 
     return (
         <>
-            <WebSocketWrap />
+            {/* <WebSocketWrap /> */}
             <RootProvider>
                 <OrderboxWrpa>
                     <OrderboxSection>

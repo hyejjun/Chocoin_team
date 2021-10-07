@@ -6,13 +6,13 @@ require('dotenv').config('env');
 const router = require('./routes');
 const bodyParser = require('body-parser');
 const expressSession = require('express-session');
-
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const config = require('./db_config.json');
-const socket = require('./socket');
+// const socket = require('./socket');
+const socket = require('./socket2');
 
-socket.wsInit();
-
+app.use(cookieParser());
 app.use(expressSession({
     resave:false,
     saveUninitialized:false,
@@ -35,6 +35,8 @@ app.use(cors({
 app.use(morgan('dev'));
 
 app.use('/',router);
+
+socket.wsInit();
 
 app.listen(port,()=>{
     console.log('server ',port)
