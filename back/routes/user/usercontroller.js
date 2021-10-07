@@ -1,7 +1,7 @@
-const mysql = require('mysql')
+const mysql = require('mysql');
 require('dotenv').config();
 const config = require('../../db_config.json');
-const { get_data, send_data } = require('../../db.js');
+const { get_data } = require('../../db.js');
 const pool = mysql.createPool(config);
 const createHash = require('../../chash');
 const token = require('../../jwt');
@@ -89,7 +89,11 @@ let login_post = (req, res) => {
 };
 
 let logout = (req, res) => {
-
+    // req.session.destroy(() => {
+    //     console.log(req.cookies);
+    //     res.clearCookie('AccessToken');
+    //     // res.redirect('/');
+    // });
     // res.cookie('AccessToken', '', { maxAge: 0 });
     // res.clearCookie('AccessToken').send(req.cookies.name);
     // res.setHeader('Set-Cookie', `token2=; path=/; expires=-1`);

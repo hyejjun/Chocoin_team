@@ -24,6 +24,7 @@
     "sequelize": "^6.6.5",
     "sequelize-cli": "^6.2.0",
     "sync-mysql": "^3.0.1",
+    "universal-cookie": "^4.0.4",
     "ws": "^8.2.3"
   }
 }

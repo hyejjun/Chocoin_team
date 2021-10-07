@@ -20,77 +20,62 @@ const defaultRet = {
 // 쿼리문 에러는 쿼리를 잘 짰으면 발생할 이유가 없음. 
 // DB 조회시 오류가 발생했다면 그것도 알려줘야함. 목록이 없는 게 아니라. 오류라는
 
-// function query(sql) {
-//     return new Promise((resolve, reject) => {
-//         pool.getConnection((error, connection) => {
-//             if (error) reject(error);
-//             connection.query(sql, (error, results, fields) => {
-//                 if (error) reject(error)
-//                 if (results === undefined) reject('error');
-//                 resolve(results);
-//                 connection.release();
-//             })
-//         })
-//     })
-// }
+function query(sql) {
+    return new Promise((resolve, reject) => {
+        pool.getConnection((error, connection) => {
+            if (error) reject(error);
+            connection.query(sql, (error, results, fields) => {
+                if (error) reject(error)
+                if (results === undefined) reject('error');
+                resolve(results);
+                connection.release();
+            })
+        })
+    })
+}
 
 async function getBuyList() {
-    // let ret = { ...defaultRet };
-    // pool.getConnection( async (err,connection)=>{
-    //     if(err) throw err;
-    //     try {
-    //         const buyListSql = `
-    //             SELECT price,pty
-    //             FROM ordertype 
-    //             WHERE ordertype="BUY"
-    //             GROUP BY price
-    //             ORDER BY price DESC
-    //             LIMIT 5;
-    //             `
-    //         const temp = await query(buyListSql);
-    //         console.log(temp, "=========")
-    //         // ret.success = true;
-    //         // ret.buyList.success = true;
-    //         // ret.buyList.list = temp[0];
-    //     } catch (error) {
-    //         console.log('Query Error Buy1');
-    //         console.log(error)
-    //         ret.buyList = messageData.errorMessage(error)
-    //     }
-    // })
-    // connection.release();
-    // return ret;
+    let ret = { ...defaultRet };
+    try {
+        const buyListSql = `
+        SELECT price,qty
+        FROM ordertable 
+        WHERE ordertype="BUY"
+        GROUP BY price
+        ORDER BY price DESC
+        LIMIT 5;
+        `
+        const temp = await query(buyListSql);
+        ret.success = true;
+        ret.buyList.success = true;
+        ret.buyList.list = temp[0];
+    } catch (error) {
+        console.log('Query Error Buy1');
+        console.log(error)
+        ret.buyList = { success: "false", msg: "buyList error" }
+    }
+    return ret;
 }
 
 async function getSellList() {
     let ret = { ...defaultRet };
-    let connection;
     try {
-        connection = await pool.getConnection(async conn => conn);
-        try {
-            const sellListSql = `
-            SELECT price,qty 
-            FROM order_list 
-            WHERE orderstype="SELL"
-            GROUP BY price
-            ORDER BY price ASC
-            LIMIT 5;
-            `
-            const temp = await connection.execute(sellListSql, []);
-            ret.success = true;
-            ret.sellList.success = true;
-            ret.sellList.list = temp[0].reverse();
-        } catch (error) {
-            console.log('Query Error SELL1');
-            console.log(error)
-            ret.sellList = messageData.errorMessage(error)
-        }
+        const sellListSql = `
+        SELECT price,qty 
+        FROM order_list 
+        WHERE orderstype="SELL"
+        GROUP BY price
+        ORDER BY price ASC
+        LIMIT 5;
+        `
+        const temp = await connection.execute(sellListSql, []);
+        ret.success = true;
+        ret.sellList.success = true;
+        ret.sellList.list = temp[0].reverse();
     } catch (error) {
-        console.log('DB Error')
+        console.log('Query Error SELL1');
         console.log(error)
-        ret.sellList = messageData.errorMessage(error);
-    } finally {
-        connection.release();
+        ret.sellList = {success:"false",msg:"sellList Error"}
     }
     return ret;
 }
@@ -132,65 +117,56 @@ async function getTransactionList(n) {
 
 async function getResult(n) {  //return array
     let ret = { ...defaultRet };
-    let connection;
     try {
-        connection = await pool.getConnection(async conn => conn);
-        try {
-            const buyListSql = ` //매수
-                SELECT price,qty
-                FROM ordertable
-                WHERE ordertype="BUY"
-                GROUP BY price
-                ORDER BY price DESC
-                LIMIT 5
+        const buyListSql = ` //매수
+            SELECT price,qty
+            FROM ordertable
+            WHERE ordertype="BUY"
+            GROUP BY price
+            ORDER BY price DESC
+            LIMIT 5
+        `
+        const buytemp = await query(buyListSql);
+        ret.buyList.success = true;
+        ret.buyList.list = buytemp[0];
+
+        const sellListSql = `
+            SELECT price,qty
+            FROM ordertable
+            WHERE ordertype="SELL"
+            GROUP BY price
+            ORDER BY price DESC
+            LIMIT 5
+        `
+
+        const selltemp = await query(sellListSql);
+        ret.sellList.success = true;
+        ret.sellList.list = selltemp[0].reverse();
+
+        // await makeTxTemp(connection);
+        // ret.chartdata = await oneMinuteInterval(connection);
+
+        let transactionListSql = `
+            SELECT  *
+            FROM transactions
+            ORDER BY id DESC
             `
-            const buytemp = await connection.execute(buyListSql, []);
-            ret.buyList.success = true;
-            ret.buyList.list = buytemp[0];
+        if (n == 0) transactionListSql += ';'   //전체 트랜잭션 조회
+        else transactionListSql += ` LIMIT ${n};` //최근 n개 트랜잭션 조회
 
-            const sellListSql = `
-                SELECT price,qty
-                FROM ordertable
-                WHERE ordertype="SELL"
-                GROUP BY price
-                ORDER BY price DESC
-                LIMIT 5
-            `
+        const txtemp = await query(transactionListSql);
+        txtemp[0].forEach((v, i) => {
+            txtemp[0][i].contracttime = txtemp[0][i].contracttime.toLocaleString();
+        })
+        ret.txList.success = true;
+        ret.txList.list = txtemp[0];
 
-            const selltemp = await connection.execute(sellListSql, []);
-            ret.sellList.success = true;
-            ret.sellList.list = selltemp[0].reverse();
-
-            // await makeTxTemp(connection);
-            // ret.chartdata = await oneMinuteInterval(connection);
-
-            //   let transactionListSql = `
-            //     SELECT  *
-            //     FROM transaction
-            //     ORDER BY id DESC
-            //     `
-            //   if(n==0) transactionListSql+=';'   //전체 트랜잭션 조회
-            //   else transactionListSql+=` LIMIT ${n};` //최근 n개 트랜잭션 조회
-
-            //   const txtemp = await connection.execute(transactionListSql, []);
-            //   txtemp[0].forEach((v, i) => {
-            //     txtemp[0][i].tx_date = txtemp[0][i].tx_date.toLocaleString();
-            //   })
-            //   ret.txList.success = true;
-            //   ret.txList.list = txtemp[0];
-
-        } catch (error) {
-            console.log('Query Error getResult');
-            console.log(error)
-            ret = messageData.errorMessage(error)
-        }
     } catch (error) {
-        console.log('DB Error')
+        console.log('Query Error getResult');
         console.log(error)
-        ret = messageData.errorMessage(error);
-    } finally {
-        connection.release();
+        ret = {success:'false',msg:"getResult error"}
     }
+    connection.release();
     return ret;
 }
 
@@ -266,7 +242,10 @@ function compareTime(pre, now) {
 }
 
 // async function makeTxTemp(conn) {
-//     const sql = `INSERT INTO transaction (sell_orderid,sell_amount,sell_commission,buy_orderid,buy_amount,buy_commission,price,tx_date) VALUES(1,100,100,2,200,100,?,?)`
+//     const sql = `
+//     INSERT INTO 
+//     transaction (sell_orderid,sell_amount,sell_commission,buy_orderid,buy_amount,buy_commission,price,tx_date) 
+//     VALUES(1,100,100,2,200,100,?,?)`
 //     let now = new Date();
 //     for (let i = 0; i < 100; i++) {
 //         let random = Math.random() * 1000;

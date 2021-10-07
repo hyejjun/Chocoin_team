@@ -6,6 +6,7 @@ const config = require('../../db_config.json')
 const pool = mysql.createPool(config)
 const jwtId = require('../../jwtId');
 const exchangeData = require('../../exchangeData');
+const ws = require('../../socket2');
 
 const headers = { "Content-type": "application/json" }
 const USER = process.env.RPC_USER;
@@ -50,10 +51,10 @@ function createbody(method, params = []) {
 
 
 
-let coin_info = (req, res) => {
+let coin_info = async (req, res) => {
     //let query = `select * from transactions order by contracttime desc`;
-    let query = `select * from ordertable where active=1`
-    get_data(req, res, query)
+    let query = `select * from ordertable where active=1`;
+    await get_data(req, res, query);
 }
 
 let tradingview = async (req, res) => {
@@ -61,66 +62,89 @@ let tradingview = async (req, res) => {
     await get_data(req, res, query)
 }
 
-let get_orderdata = async (req,res)=>{
-    let {  price, qnt, type, userid } = req.body;
+// let get_orderdata = async(req,res)=>{
+//     let { price, qnt, type, userid } = req.body;
+// }
+
+let get_orderdata = async (req, res) => {
+    let { price, qnt, type, userid } = req.body;
 
     // userid를 가지고 useridx 값 구하기
     let useridxSql = `select id from usertable where userid="${userid}"`;
-    let [{id:useridx}] = await query(useridxSql);
+    let [{ id: useridx }] = await query(useridxSql);
 
     // 내가 가지고 있는 자산 확인 : 내 자산 = myAsset
     let assetSql = `select ifnull(sum(input)-sum(output),0) as asset from assetrecord where useridx="${useridx}"`;
-    let [{asset:myAsset}] = await query(assetSql);
+    let [{ asset: myAsset }] = await query(assetSql);
 
     // 현재 로그인한 계정에 채결되지 않은 주문내역이 있는지 : 있다면 주문의 가격이 총 얼만지
     let preOrderSql = `select price from ordertable where useridx="${useridx}" and active=0`;
     let preOrder = await query(preOrderSql);
     let result = 0;
-    let preSumArr = preOrder.map(v=>{
+    let preSumArr = preOrder.map(v => {
         result += v.price
         return result
     });
-    const preSum = preSumArr.length > 0 ? preSumArr[preSumArr.length-1] : 0;
+    const preSum = preSumArr.length > 0 ? preSumArr[preSumArr.length - 1] : 0;
 
     // 채결되지 않은 주문내역만큼의 자산은 사용할 수 없음.
-    const availableAsset = myAsset-preSum;
+    const availableAsset = myAsset - preSum;
     // 마이너스로 뜰때는 어떻게 해야 하는지 처리 필요함
 
-    // if((qnt*price) > availableAsset){
-    if(availableAsset ===null ){
-        res.json({success:"fail",msg:"자산이 충분하지 않음"});
-    }else{
+    //======================================================================================
+    // if((qnt*price) > availableAsset){ ===========================================
+    if (availableAsset === null) {
+        res.json({ success: "fail", msg: "자산이 충분하지 않음" });
+    } else {
 
         // 거래 아이디 인가..?
         let insertOrderTable = `INSERT INTO ordertable (pk, useridx, qty, price, ordertype, active, coinname) VALUES (1,${useridx},${qnt},${price},"${type}",0,"chocoin");`
-        let {insertId:orderResult} = await query(insertOrderTable);
-        
+        let { insertId: orderResult } = await query(insertOrderTable);
+
         // 거래가능한 주문 목록 : 가격 - 시간 - 물량 순으로
         const availableOrderSql = `SELECT * FROM ordertable WHERE useridx NOT IN(${useridx}) AND price<=${price} AND active=0 ORDER BY price ASC, ordertime ASC, qty DESC;`;
         let availableOrder = await query(availableOrderSql);
-        
-        if(availableOrder.length == 0){
+
+        if (availableOrder.length == 0) {
+
+            // 주문완료 == 주문완료 할때까지는 다른 주문이 들어오지 않게 테이블을 닫아놓는다.
             const UNLOCKSQL = `UNLOCK TABLES;`;
             await query(UNLOCKSQL);
-            // ws.broadcast(await exchangeData.getBuyList());
-            res.json({msg:'거래완료'})
+            ws.broadcast(await exchangeData.getBuyList());
+            res.json({ msg: '거래완료' });
+
+        } else {
+
+            let insertSQL = '';
+            let cnt = 0;
+
+            for (let i = 0; i < availableOrder.length; i++) {
+                const order = availableOrder[i];
+                // insertSQL += `
+                //   INSERT INTO asset (user_idx,input,output) VALUES(${order.user_idx},${calcAsset},0);
+                //   INSERT INTO asset (user_idx,input,output) VALUES(${user_idx},0,${calcAsset});
+                //   INSERT INTO transaction (sell_orderid,sell_amount,sell_commission,buy_orderid,buy_amount,buy_commission,price) 
+                //   VALUES(${order.id},${order.leftover},${calcCoin},${nowOrderIndex},${qty},${calcCoin},${order.price});\n`
+                // qty -= order.leftover;
+                cnt++;
+                // if (qty <= 0) {
+                //     break;
+                // }
+            }
+            ws.commission(cnt);
+            res.json({result:"commission"});
         }
-
-
-
-        res.json({success:"success",results:"ddd"});
+        res.json({ success: "success", results: "ddd" });
     };
+};
 
-
-}
-
-function query(sql){
-    return new Promise((resolve,reject)=>{
-        pool.getConnection((error,connection)=>{
-            if(error) reject(error);
-            connection.query(sql,(error,results,fields)=>{
-                if(error) reject(error)
-                if(results === undefined) reject('error');
+function query(sql) {
+    return new Promise((resolve, reject) => {
+        pool.getConnection((error, connection) => {
+            if (error) reject(error);
+            connection.query(sql, (error, results, fields) => {
+                if (error) reject(error)
+                if (results === undefined) reject('error');
                 resolve(results);
                 connection.release();
             })
@@ -213,7 +237,7 @@ let get_orderdata2 = (req, res) => {
     //                 i++;
     //                 console.log("두번째 i====", i);
     //             } 
-                
+
 
     //         }
     //     })

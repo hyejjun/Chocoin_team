@@ -1,7 +1,7 @@
 const WebSocket = require("ws");
 const wPORT = process.env.WS_PORT || 6005;
 let clients = [];
-const {get_orderdata} = require('./routes/coin/coincontroller');
+const exchangeData = require('./exchangeData');
 
 const ConnectionStatus = [
     "CONNECTING", "OPEN", "CLOSING", "CLOSED", "UNINSTANTIATED",
@@ -12,9 +12,10 @@ async function wsInit() {
     console.log(`WebSocket Connected Port : ${wPORT}`);
     server.on('connection', async (ws) => {
         console.log('server connnection on');
-        const result = get_orderdata();
+        const result = await exchangeData.getBuyList(0);
+        console.log(result,"====");
         clients.push(ws);
-        ws.send(JSON.stringify(result));
+        ws.send(JSON.stringify({result:'hello'}));
     })
 };
 
@@ -36,7 +37,13 @@ function broadcast(message) {  //객체형태로 메시지 전해주기. 그럼 
     })
 };
 
+async function commission(cnt) {
+    const result = await exchangeData.getResult(cnt);
+    broadcast(result);
+};
+
 module.exports = {
     wsInit,
     broadcast,
+    commission,
 }
