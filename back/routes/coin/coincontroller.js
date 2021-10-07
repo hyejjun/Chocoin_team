@@ -134,7 +134,7 @@ let get_orderdata = async (req, res) => {
             ws.commission(cnt);
             res.json({result:"commission"});
         }
-        res.json({ success: "success", results: "ddd" });
+        // res.json({ success: "success", results: "ddd" });
     };
 };
 

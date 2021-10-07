@@ -118,7 +118,7 @@ async function getTransactionList(n) {
 async function getResult(n) {  //return array
     let ret = { ...defaultRet };
     try {
-        const buyListSql = ` //매수
+        const buyListSql = `
             SELECT price,qty
             FROM ordertable
             WHERE ordertype="BUY"
@@ -141,32 +141,32 @@ async function getResult(n) {  //return array
 
         const selltemp = await query(sellListSql);
         ret.sellList.success = true;
-        ret.sellList.list = selltemp[0].reverse();
+        // ret.sellList.list = selltemp[0].reverse();
 
         // await makeTxTemp(connection);
         // ret.chartdata = await oneMinuteInterval(connection);
 
-        let transactionListSql = `
-            SELECT  *
-            FROM transactions
-            ORDER BY id DESC
-            `
-        if (n == 0) transactionListSql += ';'   //전체 트랜잭션 조회
-        else transactionListSql += ` LIMIT ${n};` //최근 n개 트랜잭션 조회
+        // let transactionListSql = `
+        //     SELECT  *
+        //     FROM transactions
+        //     ORDER BY id DESC
+        //     `
+        // if (n == 0) transactionListSql += ';'   //전체 트랜잭션 조회
+        // else transactionListSql += ` LIMIT ${n};` //최근 n개 트랜잭션 조회
 
-        const txtemp = await query(transactionListSql);
-        txtemp[0].forEach((v, i) => {
-            txtemp[0][i].contracttime = txtemp[0][i].contracttime.toLocaleString();
-        })
-        ret.txList.success = true;
-        ret.txList.list = txtemp[0];
+        // const txtemp = await query(transactionListSql);
+        // txtemp[0].forEach((v, i) => {
+        //     txtemp[0][i].contracttime = txtemp[0][i].contracttime.toLocaleString();
+        // })
+        // ret.txList.success = true;
+        // ret.txList.list = txtemp[0];
 
     } catch (error) {
         console.log('Query Error getResult');
         console.log(error)
         ret = {success:'false',msg:"getResult error"}
     }
-    connection.release();
+    // connection.release();
     return ret;
 }
 
