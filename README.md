@@ -22,3 +22,4 @@ MariaDB Sequelize
 <br>
 
 ## 동작영상
+https://www.youtube.com/watch?v=rJY9JJw_BXY
