@@ -8,6 +8,11 @@ node.js 를 사용해서 백엔드를 구성하였습니다.<br>
 <br>
 
 
+## 동작영상
+https://www.youtube.com/watch?v=rJY9JJw_BXY
+
+<br>
+
 ## 팀 구성 
 이혜준, 허유명, 오미희, 오상엽 
 
@@ -21,5 +26,4 @@ MariaDB Sequelize
 
 <br>
 
-## 동작영상
-https://www.youtube.com/watch?v=rJY9JJw_BXY
+
